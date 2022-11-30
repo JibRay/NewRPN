@@ -29,38 +29,8 @@ struct ContentView: View {
                 .padding()
                 
                 // Keypads display.
-                ForEach(baseEngineeringKeypad.key, id: \.self) { row in
-                    HStack {
-                        ForEach(row, id: \.self) { key in
-                            Button(action: {
-                                
-                            }, label: {
-                                Text(key.symbol)
-                                    .font(.system(size: baseEngineeringKeypad.fontSize))
-                                    .frame(width: key.width(), height: key.height())
-                                    .background(key.color)
-                                    .foregroundColor(Color.white)
-                                    .cornerRadius(0.3 * baseEngineeringKeypad.fontSize)
-                            })
-                        }
-                    }
-                }
-                ForEach(mainKeypad.key, id: \.self) { row in
-                    HStack {
-                        ForEach(row, id: \.self) { key in
-                            Button(action: {
-                                
-                            }, label: {
-                                Text(key.symbol)
-                                    .font(.system(size: mainKeypad.fontSize))
-                                    .frame(width: key.width(), height: key.height())
-                                    .background(key.color)
-                                    .foregroundColor(Color.white)
-                                    .cornerRadius(0.3 * mainKeypad.fontSize)
-                            })
-                        }
-                    }
-                }
+                KeypadView(keypad: baseEngineeringKeypad)
+                KeypadView(keypad: mainKeypad)
             }
         }
     }

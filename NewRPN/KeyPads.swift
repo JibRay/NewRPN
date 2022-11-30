@@ -53,6 +53,29 @@ protocol Keypad {
     var fontSize: CGFloat { get }
 }
 
+struct KeypadView: View {
+    let keypad: any Keypad
+    
+    var body: some View {
+        ForEach(keypad.key, id: \.self) { row in
+            HStack {
+                ForEach(row, id: \.self) { key in
+                    Button(action: {
+                        
+                    }, label: {
+                        Text(key.symbol)
+                            .font(.system(size: keypad.fontSize))
+                            .frame(width: key.width(), height: key.height())
+                            .background(key.color)
+                            .foregroundColor(Color.white)
+                            .cornerRadius(0.3 * keypad.fontSize)
+                    })
+                }
+            }
+        }
+    }
+}
+
 struct MainKeypad: Keypad {
     let fontSize: CGFloat = 32
     
