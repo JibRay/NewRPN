@@ -37,18 +37,18 @@ struct Key: Hashable {
     func width() -> CGFloat {
         let cc: CGFloat = CGFloat(geometry.1)
         let n: CGFloat = CGFloat(columns)
-        let w = n * ((UIScreen.main.bounds.width - (((cc - 1) * 10) + 40)) / cc)
+        let w = n * ((UIScreen.main.bounds.width - (((cc - 1) * 10) + 20)) / cc)
         return w
     }
     
     // rowCount is the number of rows in the column where this key resides.
     // Return the key height.
     func height() -> CGFloat {
-        return 70
+        return 50
     }
 }
 
-struct MainKeyPad {
+struct MainKeypad {
     let key: [[Key]] = [
         [Key((5,4), symbol: "ENTER", columns: 2, color: Color(.lightGray)),
          Key((5,4), symbol: "+/-", color: Color(.lightGray)),
@@ -73,5 +73,23 @@ struct MainKeyPad {
          Key((5,4), symbol: ".", color: Color(.brown)),
          Key((5,4), symbol: "DEL", color: Color(.lightGray)),
          Key((5,4), symbol: "+", color: Color(.orange))]
+    ]
+}
+
+struct BaseEngineeringKeypad {
+    let key: [[Key]] = [
+        [Key((2,6), symbol: "SIN", color: Color(.blue)),
+         Key((2,6), symbol: "COS", color: Color(.blue)),
+         Key((2,6), symbol: "TAN", color: Color(.blue)),
+         Key((2,6), symbol: "SQR", color: Color(.blue)),
+         Key((2,6), symbol: "yX", color: Color(.blue)),
+         Key((2,6), symbol: "1/X", color: Color(.blue))],
+        
+        [Key((2,6), symbol: "ASIN", color: Color(.blue)),
+         Key((2,6), symbol: "ACOS", color: Color(.blue)),
+         Key((2,6), symbol: "ATAN", color: Color(.blue)),
+         Key((2,6), symbol: "x2", color: Color(.blue)),
+         Key((2,6), symbol: "10X", color: Color(.blue)),
+         Key((2,6), symbol: "eX", color: Color(.blue))]
     ]
 }
