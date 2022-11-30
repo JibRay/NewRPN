@@ -48,11 +48,18 @@ struct Key: Hashable {
     }
 }
 
-struct MainKeypad {
+protocol Keypad {
+    var key: [[Key]] { get }
+    var fontSize: CGFloat { get }
+}
+
+struct MainKeypad: Keypad {
+    let fontSize: CGFloat = 32
+    
     let key: [[Key]] = [
-        [Key((5,4), symbol: "ENTER", columns: 2, color: Color(.lightGray)),
-         Key((5,4), symbol: "+/-", color: Color(.lightGray)),
-         Key((5,4), symbol: "EEX", color: Color(.lightGray))],
+        [Key((5,4), symbol: "ENTER", columns: 2, color: Color(.gray)),
+         Key((5,4), symbol: "+/-", color: Color(.gray)),
+         Key((5,4), symbol: "EEX", color: Color(.gray))],
         
         [Key((5,4), symbol: "7", color: Color(.brown)),
          Key((5,4), symbol: "8", color: Color(.brown)),
@@ -71,12 +78,14 @@ struct MainKeypad {
         
         [Key((5,4), symbol: "0", color: Color(.brown)),
          Key((5,4), symbol: ".", color: Color(.brown)),
-         Key((5,4), symbol: "DEL", color: Color(.lightGray)),
+         Key((5,4), symbol: "DEL", color: Color(.gray)),
          Key((5,4), symbol: "+", color: Color(.orange))]
     ]
 }
 
-struct BaseEngineeringKeypad {
+struct BaseEngineeringKeypad: Keypad {
+    let fontSize: CGFloat = 20
+    
     let key: [[Key]] = [
         [Key((2,6), symbol: "SIN", color: Color(.blue)),
          Key((2,6), symbol: "COS", color: Color(.blue)),

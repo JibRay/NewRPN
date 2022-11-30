@@ -36,11 +36,11 @@ struct ContentView: View {
                                 
                             }, label: {
                                 Text(key.symbol)
-                                    .font(.system(size: 20))
+                                    .font(.system(size: baseEngineeringKeypad.fontSize))
                                     .frame(width: key.width(), height: key.height())
                                     .background(key.color)
                                     .foregroundColor(Color.white)
-                                    .cornerRadius(10)
+                                    .cornerRadius(0.3 * baseEngineeringKeypad.fontSize)
                             })
                         }
                     }
@@ -52,11 +52,11 @@ struct ContentView: View {
                                 
                             }, label: {
                                 Text(key.symbol)
-                                    .font(.system(size: 32))
+                                    .font(.system(size: mainKeypad.fontSize))
                                     .frame(width: key.width(), height: key.height())
                                     .background(key.color)
                                     .foregroundColor(Color.white)
-                                    .cornerRadius(15)
+                                    .cornerRadius(0.3 * mainKeypad.fontSize)
                             })
                         }
                     }
