@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var value = "0"
+    @State var stack = Stack()
     
     let baseEngineeringKeypad = BaseEngineeringKeypad()
+    let stackKeypad = StackKeypad()
     let mainKeypad = MainKeypad()
     
     var body: some View {
@@ -21,16 +22,17 @@ struct ContentView: View {
                 // Stack display.
                 HStack {
                     Spacer()
-                    Text(value)
+                    Text(stack.entryValueText)
                         .bold()
                         .font(.system(size: 40))
-                        .foregroundColor(.white)
+                        .foregroundColor(.yellow)
                 }
                 .padding()
                 
                 // Keypads display.
-                KeypadView(keypad: baseEngineeringKeypad)
-                KeypadView(keypad: mainKeypad)
+                KeypadView(stack: $stack, keypad: baseEngineeringKeypad)
+                KeypadView(stack: $stack, keypad: stackKeypad)
+                KeypadView(stack: $stack, keypad: mainKeypad)
             }
         }
     }

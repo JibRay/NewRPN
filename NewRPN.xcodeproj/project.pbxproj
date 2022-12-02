@@ -12,6 +12,7 @@
 		0C2772D529356E8A00B9BD92 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C2772D429356E8A00B9BD92 /* Assets.xcassets */; };
 		0C2772D829356E8A00B9BD92 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C2772D729356E8A00B9BD92 /* Preview Assets.xcassets */; };
 		0C2772DF2936553100B9BD92 /* KeyPads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2772DE2936553100B9BD92 /* KeyPads.swift */; };
+		0C2772E129380B9000B9BD92 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2772E029380B9000B9BD92 /* Stack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		0C2772D429356E8A00B9BD92 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0C2772D729356E8A00B9BD92 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0C2772DE2936553100B9BD92 /* KeyPads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPads.swift; sourceTree = "<group>"; };
+		0C2772E029380B9000B9BD92 /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 				0C2772D429356E8A00B9BD92 /* Assets.xcassets */,
 				0C2772D629356E8A00B9BD92 /* Preview Content */,
 				0C2772DE2936553100B9BD92 /* KeyPads.swift */,
+				0C2772E029380B9000B9BD92 /* Stack.swift */,
 			);
 			path = NewRPN;
 			sourceTree = "<group>";
@@ -140,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C2772E129380B9000B9BD92 /* Stack.swift in Sources */,
 				0C2772D329356E8900B9BD92 /* ContentView.swift in Sources */,
 				0C2772D129356E8900B9BD92 /* NewRPNApp.swift in Sources */,
 				0C2772DF2936553100B9BD92 /* KeyPads.swift in Sources */,

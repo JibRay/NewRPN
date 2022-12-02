@@ -54,6 +54,8 @@ protocol Keypad {
 }
 
 struct KeypadView: View {
+    @Binding var stack: Stack
+    
     let keypad: any Keypad
     
     var body: some View {
@@ -61,7 +63,7 @@ struct KeypadView: View {
             HStack {
                 ForEach(row, id: \.self) { key in
                     Button(action: {
-                        
+                        stack.parse(key.symbol)
                     }, label: {
                         Text(key.symbol)
                             .font(.system(size: keypad.fontSize))
@@ -92,7 +94,7 @@ struct MainKeypad: Keypad {
         [Key((5,4), symbol: "4", color: Color(.brown)),
          Key((5,4), symbol: "5", color: Color(.brown)),
          Key((5,4), symbol: "6", color: Color(.brown)),
-         Key((5,4), symbol: "X", color: Color(.orange))],
+         Key((5,4), symbol: "x", color: Color(.orange))],
         
         [Key((5,4), symbol: "1", color: Color(.brown)),
          Key((5,4), symbol: "2", color: Color(.brown)),
@@ -106,6 +108,18 @@ struct MainKeypad: Keypad {
     ]
 }
 
+struct StackKeypad: Keypad {
+    let fontSize: CGFloat = 20
+    
+    let key: [[Key]] = [
+        [Key((1,4), symbol: "OVER", color: Color(.gray)),
+         Key((1,4), symbol: "SWAP", color: Color(.gray)),
+         Key((1,4), symbol: "PICK", color: Color(.gray)),
+         Key((1,4), symbol: "DROP", color: Color(.gray))]
+    ]
+
+}
+
 struct BaseEngineeringKeypad: Keypad {
     let fontSize: CGFloat = 20
     
@@ -115,7 +129,7 @@ struct BaseEngineeringKeypad: Keypad {
          Key((2,6), symbol: "TAN", color: Color(.blue)),
          Key((2,6), symbol: "SQR", color: Color(.blue)),
          Key((2,6), symbol: "yX", color: Color(.blue)),
-         Key((2,6), symbol: "1/X", color: Color(.blue))],
+         Key((2,6), symbol: "1/x", color: Color(.blue))],
         
         [Key((2,6), symbol: "ASIN", color: Color(.blue)),
          Key((2,6), symbol: "ACOS", color: Color(.blue)),
