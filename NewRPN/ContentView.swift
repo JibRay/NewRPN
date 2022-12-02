@@ -18,16 +18,21 @@ struct ContentView: View {
         ZStack {
             Color.black.edgesIgnoringSafeArea(.all)
             VStack {
-                Spacer()
-                // Stack display.
+                ForEach((0...4).reversed(), id: \.self) {
+                    Text("\(stack.stackItemText($0))")
+                        .bold()
+                        .font(.system(size: 32))
+                        .monospaced()
+                        .foregroundColor(.white)
+                }
                 HStack {
-                    Spacer()
                     Text(stack.entryValueText)
                         .bold()
-                        .font(.system(size: 40))
+                        .font(.system(size: 32))
+                        .monospaced()
                         .foregroundColor(.yellow)
+                    Spacer()
                 }
-                .padding()
                 
                 // Keypads display.
                 KeypadView(stack: $stack, keypad: baseEngineeringKeypad)
