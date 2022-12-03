@@ -127,7 +127,8 @@ struct BaseEngineeringKeypad: Keypad {
         [Key((2,6), symbol: "SIN", color: Color(.blue)),
          Key((2,6), symbol: "COS", color: Color(.blue)),
          Key((2,6), symbol: "TAN", color: Color(.blue)),
-         Key((2,6), symbol: "SQR", color: Color(.blue)),
+         // Key((2,6), symbol: "\(Image(systemName: "x.squareroot"))", color: Color(.blue)),
+         Key((2,6), symbol: "SQRT", color: Color(.blue)),
          Key((2,6), symbol: "yX", color: Color(.blue)),
          Key((2,6), symbol: "1/x", color: Color(.blue))],
         

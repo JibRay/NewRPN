@@ -51,7 +51,7 @@ struct Stack {
                 return negateNumberString(mantisaText, negative: negateMantisa)
             } else {
                 return negateNumberString(mantisaText, negative: negateMantisa)
-                    + "E" + negateNumberString(exponentText, negative: negateExponent)
+                    + "e" + negateNumberString(exponentText, negative: negateExponent)
             }
         }
     }
@@ -86,12 +86,36 @@ struct Stack {
         }
     }
     
+    // FIXME: using this fails to compile.
+    func scienticFormatter() -> NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .scientific
+        formatter.positiveFormat = "0.######E+0"
+        formatter.exponentSymbol = "e"
+        return formatter
+    }
+    
     func stackItemText(_ index: Int) -> String {
+        var text = ""
         if stackItems[index].empty {
             return ""
         } else {
-            return String(format: "%0.6f", stackItems[index].decimalValue)
+            if stackItems[index].decimalValue > 999999999.999999
+                || stackItems[index].decimalValue < -999999999.999999 {
+                let formatter = NumberFormatter()
+                formatter.numberStyle = .scientific
+                formatter.positiveFormat = "0.######E+0"
+                formatter.exponentSymbol = "e"
+                if let etext = formatter.string(for: stackItems[index].decimalValue) {
+                    text = etext
+                } else {
+                    text = ""
+                }
+            } else {
+                text = String(format: "%0.6f", stackItems[index].decimalValue)
+            }
         }
+        return text
     }
     
     mutating func clearMantisa() {
@@ -188,7 +212,7 @@ struct Stack {
                         push(StackItem(empty: false, decimalValue: y))
                     }
                 } else if stackDepth() >= 2 {
-                    var x = pop().decimalValue
+                    let x = pop().decimalValue
                     stackItems[0].decimalValue += x
                 }
                 clearMantisa()
@@ -229,12 +253,23 @@ struct Stack {
                 }
                 clearMantisa()
             case .enter:
-                if let v = Double(mantisaText) {
+                var text = negateMantisa ? "-" : ""
+                text += mantisaText
+                if exponentText.count > 0 {
+                    text += "e"
+                    text += negateExponent ? "-" : ""
+                    text += exponentText
+                }
+                if let v = Double(text) {
                     push(StackItem(empty: false, decimalValue: v))
                 } else {
                     push(stackItems[0])
                 }
                 mantisaText = ""
+                exponentText = ""
+                negateMantisa = false
+                negateExponent = false
+                parsingMantisa = true
             default:
                 entryValue = 0.0
             }
