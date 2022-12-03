@@ -94,6 +94,26 @@ struct Stack {
         }
     }
     
+    mutating func clearMantisa() {
+        mantisaText = ""
+        exponentText = ""
+        negateMantisa = false
+        negateExponent = false
+        parsingMantisa = true
+    }
+    
+    func stackDepth() -> Int {
+        var depth = 0
+        for index in 0..<stackSize {
+            if stackItems[index].empty {
+                return depth
+            } else {
+                depth += 1
+            }
+        }
+        return depth
+    }
+    
     mutating func push(_ item: StackItem) {
         for index in stride(from: stackSize - 1, through: 1, by: -1) {
             stackItems[index] = stackItems[index - 1]
@@ -155,26 +175,64 @@ struct Stack {
                 if mantisaText.count == 0 {
                     drop()
                 }
-                mantisaText = ""
-                exponentText = ""
-                negateMantisa = false
-                negateExponent = false
-                parsingMantisa = true
+                clearMantisa()
             case .exponent:
-                if (radix == .decimal) {
+                if (mantisaText.count > 0 && radix == .decimal) {
                     parsingMantisa = false
                 }
             case .add:
-                entryValue = 0.0
+                // First see if there is a valid value in the mantisa.
+                if let z = Double(mantisaText) {
+                    if stackDepth() >= 1 {
+                        let y = pop().decimalValue + z
+                        push(StackItem(empty: false, decimalValue: y))
+                    }
+                } else if stackDepth() >= 2 {
+                    var x = pop().decimalValue
+                    stackItems[0].decimalValue += x
+                }
+                clearMantisa()
             case .subtract:
-                entryValue = 0.0
+                // First see if there is a valid value in the mantisa.
+                if let z = Double(mantisaText) {
+                    if stackDepth() >= 1 {
+                        let y = pop().decimalValue - z
+                        push(StackItem(empty: false, decimalValue: y))
+                    }
+                } else if stackDepth() >= 2 {
+                    let x = pop().decimalValue
+                    stackItems[0].decimalValue -= x
+                }
+                clearMantisa()
             case .multiply:
-                entryValue = 0.0
+                // First see if there is a valid value in the mantisa.
+                if let z = Double(mantisaText) {
+                    if stackDepth() >= 1 {
+                        let y = pop().decimalValue * z
+                        push(StackItem(empty: false, decimalValue: y))
+                    }
+                } else if stackDepth() >= 2 {
+                    let x = pop().decimalValue
+                    stackItems[0].decimalValue *= x
+                }
+                clearMantisa()
             case .divide:
-                entryValue = 0.0
+                // First see if there is a valid value in the mantisa.
+                if let z = Double(mantisaText) {
+                    if stackDepth() >= 1 {
+                        let y = pop().decimalValue / z
+                        push(StackItem(empty: false, decimalValue: y))
+                    }
+                } else if stackDepth() >= 2 {
+                    let x = pop().decimalValue
+                    stackItems[0].decimalValue /= x
+                }
+                clearMantisa()
             case .enter:
                 if let v = Double(mantisaText) {
                     push(StackItem(empty: false, decimalValue: v))
+                } else {
+                    push(stackItems[0])
                 }
                 mantisaText = ""
             default:

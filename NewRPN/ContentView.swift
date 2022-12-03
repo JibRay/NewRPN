@@ -17,13 +17,19 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             Color.black.edgesIgnoringSafeArea(.all)
+            Spacer()
             VStack {
-                ForEach((0...4).reversed(), id: \.self) {
-                    Text("\(stack.stackItemText($0))")
-                        .bold()
-                        .font(.system(size: 32))
-                        .monospaced()
-                        .foregroundColor(.white)
+                Spacer()
+                ForEach(0 ..< 5) { i in
+                    HStack {
+                        Spacer()
+                        Text("\(stack.stackItemText(4 - i))")
+                            .bold()
+                            .font(.system(size: 32))
+                            .monospaced()
+                            .foregroundColor(.white)
+                            .padding(.trailing, 20)
+                    }
                 }
                 HStack {
                     Text(stack.entryValueText)
