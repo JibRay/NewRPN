@@ -17,6 +17,7 @@ enum Radix {
 
 enum KeyOperation {
     case none, delete, negate, exponent, add, subtract, multiply, divide, enter
+    case over, swap, pick, drop
 }
 
 struct StackItem {
@@ -75,7 +76,11 @@ struct Stack {
                         "-": KeyStroke(operation: .subtract),
                         "x": KeyStroke(operation: .multiply),
                         "/": KeyStroke(operation: .divide),
-                        "ENTER": KeyStroke(operation: .enter)]
+                        "ENTER": KeyStroke(operation: .enter),
+                        "OVER": KeyStroke(operation: .over),
+                        "SWAP": KeyStroke(operation: .swap),
+                        "PICK": KeyStroke(operation: .pick),
+                        "DROP": KeyStroke(operation: .drop)]
 
     // If negative is true prepend a "-" number.
     func negateNumberString(_ number: String, negative: Bool) -> String {
@@ -154,11 +159,23 @@ struct Stack {
         return top
     }
     
+    mutating func over() {
+        if !stackItems[1].empty {
+            push(stackItems[1])
+        }
+    }
+    
     mutating func swap() {
         if !stackItems[0].empty && !stackItems[1].empty {
             let top = stackItems[0]
             stackItems[0] = stackItems[1]
             stackItems[1] = top
+        }
+    }
+    
+    mutating func pick(_ item: Int) {
+        if item < stackSize && !stackItems[item].empty {
+            push(stackItems[item])
         }
     }
     
@@ -270,6 +287,17 @@ struct Stack {
                 negateMantisa = false
                 negateExponent = false
                 parsingMantisa = true
+            case .over:
+                over()
+            case .swap:
+                swap()
+            case .pick:
+                if let n = Int(mantisaText) {
+                    pick(n - 1)
+                }
+                clearMantisa()
+            case .drop:
+                drop()
             default:
                 entryValue = 0.0
             }
