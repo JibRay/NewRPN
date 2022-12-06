@@ -78,36 +78,6 @@ struct KeypadView: View {
     }
 }
 
-struct MainKeypad: Keypad {
-    let fontSize: CGFloat = 32
-    
-    let key: [[Key]] = [
-        [Key((5,4), symbol: "ENTER", columns: 2, color: Color(.gray)),
-         Key((5,4), symbol: "+/-", color: Color(.gray)),
-         Key((5,4), symbol: "EEX", color: Color(.gray))],
-        
-        [Key((5,4), symbol: "7", color: Color(.brown)),
-         Key((5,4), symbol: "8", color: Color(.brown)),
-         Key((5,4), symbol: "9", color: Color(.brown)),
-         Key((5,4), symbol: "/", color: Color(.orange))],
-        
-        [Key((5,4), symbol: "4", color: Color(.brown)),
-         Key((5,4), symbol: "5", color: Color(.brown)),
-         Key((5,4), symbol: "6", color: Color(.brown)),
-         Key((5,4), symbol: "x", color: Color(.orange))],
-        
-        [Key((5,4), symbol: "1", color: Color(.brown)),
-         Key((5,4), symbol: "2", color: Color(.brown)),
-         Key((5,4), symbol: "3", color: Color(.brown)),
-         Key((5,4), symbol: "-", color: Color(.orange))],
-        
-        [Key((5,4), symbol: "0", color: Color(.brown)),
-         Key((5,4), symbol: ".", color: Color(.brown)),
-         Key((5,4), symbol: "DEL", color: Color(.gray)),
-         Key((5,4), symbol: "+", color: Color(.orange))]
-    ]
-}
-
 struct StackKeypad: Keypad {
     let fontSize: CGFloat = 20
     

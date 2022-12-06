@@ -104,12 +104,14 @@ struct Stack {
         var text = ""
         if stackItems[index].empty {
             return ""
-        } else {
-            if stackItems[index].decimalValue > 999999999.999999
-                || stackItems[index].decimalValue < -999999999.999999 {
+        } else { // FIXME: Values do not display correctly in all cases.
+            if ((stackItems[index].decimalValue < 0.00000001 && stackItems[index].decimalValue > 0.0)
+                || (stackItems[index].decimalValue > 999999999.999999)
+                || (stackItems[index].decimalValue < -999999999.999999)
+                || (stackItems[index].decimalValue > -0.00000001) && stackItems[index].decimalValue < 0.0) {
                 let formatter = NumberFormatter()
                 formatter.numberStyle = .scientific
-                formatter.positiveFormat = "0.######E+0"
+                formatter.positiveFormat = "0.########E+0"
                 formatter.exponentSymbol = "e"
                 if let etext = formatter.string(for: stackItems[index].decimalValue) {
                     text = etext
@@ -117,7 +119,7 @@ struct Stack {
                     text = ""
                 }
             } else {
-                text = String(format: "%0.6f", stackItems[index].decimalValue)
+                text = String(format: "%0.8f", stackItems[index].decimalValue)
             }
         }
         return text
@@ -289,6 +291,7 @@ struct Stack {
                 parsingMantisa = true
             case .over:
                 over()
+                clearMantisa()
             case .swap:
                 swap()
             case .pick:

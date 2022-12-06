@@ -12,7 +12,6 @@ struct ContentView: View {
     
     let baseEngineeringKeypad = BaseEngineeringKeypad()
     let stackKeypad = StackKeypad()
-    let mainKeypad = MainKeypad()
     
     var body: some View {
         ZStack {
@@ -43,7 +42,7 @@ struct ContentView: View {
                 // Keypads display.
                 KeypadView(stack: $stack, keypad: baseEngineeringKeypad)
                 KeypadView(stack: $stack, keypad: stackKeypad)
-                KeypadView(stack: $stack, keypad: mainKeypad)
+                KeypadView(stack: $stack, keypad: DecimalKeypad(stack: $stack))
             }
         }
     }
