@@ -16,7 +16,7 @@
 		0CCD6D3E293E24060087B453 /* DecimalKeypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD6D3D293E24060087B453 /* DecimalKeypad.swift */; };
 		0CCD6D40293FABE10087B453 /* BaseEngineeringKeypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD6D3F293FABE10087B453 /* BaseEngineeringKeypad.swift */; };
 		0CCD6D42293FAFA20087B453 /* BaseStackKeypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD6D41293FAFA20087B453 /* BaseStackKeypad.swift */; };
-		0CCD6D4429422CE70087B453 /* HexidecimalKeypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD6D4329422CE70087B453 /* HexidecimalKeypad.swift */; };
+		0CCD6D4429422CE70087B453 /* HexadecimalKeypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD6D4329422CE70087B453 /* HexadecimalKeypad.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +30,7 @@
 		0CCD6D3D293E24060087B453 /* DecimalKeypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalKeypad.swift; sourceTree = "<group>"; };
 		0CCD6D3F293FABE10087B453 /* BaseEngineeringKeypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseEngineeringKeypad.swift; sourceTree = "<group>"; };
 		0CCD6D41293FAFA20087B453 /* BaseStackKeypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStackKeypad.swift; sourceTree = "<group>"; };
-		0CCD6D4329422CE70087B453 /* HexidecimalKeypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexidecimalKeypad.swift; sourceTree = "<group>"; };
+		0CCD6D4329422CE70087B453 /* HexadecimalKeypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexadecimalKeypad.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +72,7 @@
 				0CCD6D3D293E24060087B453 /* DecimalKeypad.swift */,
 				0CCD6D3F293FABE10087B453 /* BaseEngineeringKeypad.swift */,
 				0CCD6D41293FAFA20087B453 /* BaseStackKeypad.swift */,
-				0CCD6D4329422CE70087B453 /* HexidecimalKeypad.swift */,
+				0CCD6D4329422CE70087B453 /* HexadecimalKeypad.swift */,
 			);
 			path = NewRPN;
 			sourceTree = "<group>";
@@ -160,7 +160,7 @@
 				0C2772D329356E8900B9BD92 /* ContentView.swift in Sources */,
 				0C2772D129356E8900B9BD92 /* NewRPNApp.swift in Sources */,
 				0CCD6D40293FABE10087B453 /* BaseEngineeringKeypad.swift in Sources */,
-				0CCD6D4429422CE70087B453 /* HexidecimalKeypad.swift in Sources */,
+				0CCD6D4429422CE70087B453 /* HexadecimalKeypad.swift in Sources */,
 				0C2772DF2936553100B9BD92 /* KeyPads.swift in Sources */,
 				0CCD6D42293FAFA20087B453 /* BaseStackKeypad.swift in Sources */,
 			);

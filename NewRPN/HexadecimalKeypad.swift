@@ -1,5 +1,5 @@
 //
-//  HexidecimalKeypad.swift
+//  HexadecimalKeypad.swift
 //  NewRPN
 //
 //  Created by Jib Ray on 12/8/22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HexidecimalKeypad: Keypad {
+struct HexadecimalKeypad: Keypad {
     @Binding var stack: Stack
     let fontSize: CGFloat = 25
     // This keypad's operations.
