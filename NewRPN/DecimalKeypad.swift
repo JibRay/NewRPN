@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DecimalKeypad: Keypad {
     @Binding var stack: Stack
-    let fontSize: CGFloat = 32
+    let fontSize: CGFloat = 25
     // This keypad's operations.
     let operationMap = ["+/-": KeyStroke(operation: .negate),
                         "DEL": KeyStroke(operation: .delete),
@@ -48,6 +48,7 @@ struct DecimalKeypad: Keypad {
     ]
     
     func parse(_ keySymbol: String) -> Bool {
+        stack.radix = .decimal
         if stack.parse(keySymbol) {
             return true
         }
@@ -71,7 +72,7 @@ struct DecimalKeypad: Keypad {
                 if let z = Double(stack.mantisaText) {
                     if stack.stackDepth() >= 1 {
                         let y = stack.pop()!.decimalValue + z
-                        stack.push(StackItem(empty: false, decimalValue: y))
+                        stack.push(StackItem(decimalValue: y))
                     }
                 } else if stack.stackDepth() >= 2 {
                     let x = stack.pop()!.decimalValue
@@ -83,7 +84,7 @@ struct DecimalKeypad: Keypad {
                 if let z = Double(stack.mantisaText) {
                     if stack.stackDepth() >= 1 {
                         let y = stack.pop()!.decimalValue - z
-                        stack.push(StackItem(empty: false, decimalValue: y))
+                        stack.push(StackItem(decimalValue: y))
                     }
                 } else if stack.stackDepth() >= 2 {
                     let x = stack.pop()!.decimalValue
@@ -95,7 +96,7 @@ struct DecimalKeypad: Keypad {
                 if let z = Double(stack.mantisaText) {
                     if stack.stackDepth() >= 1 {
                         let y = stack.pop()!.decimalValue * z
-                        stack.push(StackItem(empty: false, decimalValue: y))
+                        stack.push(StackItem(decimalValue: y))
                     }
                 } else if stack.stackDepth() >= 2 {
                     let x = stack.pop()!.decimalValue
@@ -107,7 +108,7 @@ struct DecimalKeypad: Keypad {
                 if let z = Double(stack.mantisaText) {
                     if stack.stackDepth() >= 1 {
                         let y = stack.pop()!.decimalValue / z
-                        stack.push(StackItem(empty: false, decimalValue: y))
+                        stack.push(StackItem(decimalValue: y))
                     }
                 } else if stack.stackDepth() >= 2 {
                     let x = stack.pop()!.decimalValue
@@ -123,7 +124,7 @@ struct DecimalKeypad: Keypad {
                     text += stack.exponentText
                 }
                 if let v = Double(text) {
-                    stack.push(StackItem(empty: false, decimalValue: v))
+                    stack.push(StackItem(decimalValue: v))
                 } else {
                     stack.push(stack.stackItems[0])
                 }

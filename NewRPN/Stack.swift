@@ -13,8 +13,37 @@ enum Radix {
 
 struct StackItem {
     var empty: Bool = true
-    var decimalValue: Double = 0.0
-    var integerValue: Int64 = 0
+    var _decimalValue: Double = 0.0
+    var decimalValue: Double {
+        get { return _decimalValue }
+        set {
+            _decimalValue = newValue
+            _integerValue = Int64(newValue)
+        }
+    }
+    var _integerValue: Int64 = 0
+    var integerValue: Int64 {
+        get { return _integerValue }
+        set {
+            _integerValue = newValue
+            _decimalValue = Double(newValue)
+        }
+    }
+    init() {
+        empty = true
+        _decimalValue = 0.0
+        _integerValue = 0
+    }
+    init(decimalValue: Double) {
+        self.empty = false
+        self._decimalValue = decimalValue
+        self._integerValue = Int64(decimalValue)
+    }
+    init(integerValue: Int64) {
+        self.empty = false
+        self._integerValue = integerValue
+        self._decimalValue = Double(integerValue)
+    }
 }
 
 struct Stack {
@@ -23,17 +52,31 @@ struct Stack {
     var stackItems = [StackItem](repeating: StackItem(), count: 5)
     var entryValueText: String {
         get {
+            var text: String
             if (parsingMantisa) {
-                return negateNumberString(mantisaText, negative: negateMantisa)
+                text = negateNumberString(mantisaText, negative: negateMantisa)
             } else {
-                return negateNumberString(mantisaText, negative: negateMantisa)
+                text = negateNumberString(mantisaText, negative: negateMantisa)
                     + "e" + negateNumberString(exponentText, negative: negateExponent)
             }
+            return text
         }
     }
     
     // FIXME: For now everything is assumed to be decimal.
     var radix: Radix = .decimal
+    var radixLabel: String {
+        get {
+            switch radix {
+            case .decimal:
+                return ""
+            case .hexidecimal:
+                return "Hex:"
+            case .octal:
+                return "Oct:"
+            }
+        }
+    }
     
     var mantisaText: String = ""
     var exponentText: String = ""
@@ -97,23 +140,30 @@ struct Stack {
         if stackItems[index].empty {
             return ""
         } else { // FIXME: Values do not display correctly in all cases.
-            if ((stackItems[index].decimalValue < 0.00000001 && stackItems[index].decimalValue > 0.0)
-                || (stackItems[index].decimalValue > 999999999.999999)
-                || (stackItems[index].decimalValue < -999999999.999999)
-                || (stackItems[index].decimalValue > -0.00000001) && stackItems[index].decimalValue < 0.0) {
-                let formatter = NumberFormatter()
-                formatter.numberStyle = .scientific
-                formatter.positiveFormat = "0.########E+0"
-                formatter.exponentSymbol = "e"
-                if let etext = formatter.string(for: stackItems[index].decimalValue) {
-                    text = etext
+            switch radix {
+            case .decimal:
+                if ((stackItems[index].decimalValue < 0.00000001 && stackItems[index].decimalValue > 0.0)
+                    || (stackItems[index].decimalValue > 999999999.999999)
+                    || (stackItems[index].decimalValue < -999999999.999999)
+                    || (stackItems[index].decimalValue > -0.00000001) && stackItems[index].decimalValue < 0.0) {
+                    let formatter = NumberFormatter()
+                    formatter.numberStyle = .scientific
+                    formatter.positiveFormat = "0.########E+0"
+                    formatter.exponentSymbol = "e"
+                    if let etext = formatter.string(for: stackItems[index].decimalValue) {
+                        text = etext
+                    } else {
+                        text = ""
+                    }
                 } else {
-                    text = ""
+                    text = String(format: "%0.8f", stackItems[index].decimalValue)
                 }
-            } else {
-                text = String(format: "%0.8f", stackItems[index].decimalValue)
+                case .octal:
+                    text = String(format: "o:%X", stackItems[index].integerValue)
+                case .hexidecimal:
+                    text = String(format: "x:%X", stackItems[index].integerValue)
+                }
             }
-        }
         return text
     }
     
@@ -187,19 +237,34 @@ struct Stack {
     // If keySymbol is a valid number in the current radix,
     // process it and return true. Otherwise return false.
     mutating func parse(_ keySymbol: String) -> Bool {
-        if radix == .octal && validOctalNumbers.contains(keySymbol)
-            || radix == .decimal && validDecimalNumbers.contains(keySymbol)
-            || radix == .hexidecimal && validHexNumbers.contains(keySymbol) {
-            if parsingMantisa {
+        switch radix {
+        case .octal:
+            if (validOctalNumbers.contains(keySymbol)) {
                 if mantisaText.count < 15 {
                     mantisaText += keySymbol
                 }
-            } else {
-                if exponentText.count < 3 && keySymbol != "." {
-                    exponentText += keySymbol
-                }
+                return true
             }
-            return true
+        case .hexidecimal:
+            if (validHexNumbers.contains(keySymbol)) {
+                if mantisaText.count < 15 {
+                    mantisaText += keySymbol
+                }
+                return true
+            }
+        case .decimal:
+            if (validDecimalNumbers.contains(keySymbol)) {
+                if parsingMantisa {
+                    if mantisaText.count < 15 {
+                        mantisaText += keySymbol
+                    }
+                } else {
+                    if exponentText.count < 3 && keySymbol != "." {
+                        exponentText += keySymbol
+                    }
+                }
+                return true
+            }
         }
         return false
     }

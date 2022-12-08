@@ -51,31 +51,31 @@ struct BaseEngineeringKeypad: Keypad {
             switch operationToken.operation {
             case .sin:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.push(StackItem(empty: false, decimalValue: sin(x)))
+                    stack.push(StackItem(decimalValue: sin(x)))
                 }
             case .cos:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.push(StackItem(empty: false, decimalValue: cos(x)))
+                    stack.push(StackItem(decimalValue: cos(x)))
                 }
             case .tan:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.push(StackItem(empty: false, decimalValue: tan(x)))
+                    stack.push(StackItem(decimalValue: tan(x)))
                 }
             case .sqrt:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.push(StackItem(empty: false, decimalValue: sqrt(x)))
+                    stack.push(StackItem(decimalValue: sqrt(x)))
                 }
             case .YtoX:
                 if let x: Double = stack.getEntryOrStackValue() {
                     if stack.stackDepth() > 0 {
                         let ys = stack.pop()
                         let y = ys!.decimalValue
-                        stack.push(StackItem(empty: false, decimalValue: pow(y, x)))
+                        stack.push(StackItem(decimalValue: pow(y, x)))
                     }
                 }
             case .invertX:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.push(StackItem(empty: false, decimalValue: 1.0 / x))
+                    stack.push(StackItem(decimalValue: 1.0 / x))
                 }
             case .asin:
                 _ = 0
