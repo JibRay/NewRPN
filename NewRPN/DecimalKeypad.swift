@@ -10,14 +10,7 @@ import SwiftUI
 struct DecimalKeypad: Keypad {
     @Binding var stack: Stack
     let fontSize: CGFloat = 32
-    var mantisaText: String = ""
-    var exponentText: String = ""
-    var radix: Radix = .decimal // FIXME: Just decimal for now.
-    var entryValue: Double = 0.0
-    var parsingMantisa = true
-    var negateMantisa = false
-    var negateExponent = false
-    let validNumbers = "0123456789."
+    // This keypad's operations.
     let operationMap = ["+/-": KeyStroke(operation: .negate),
                         "DEL": KeyStroke(operation: .delete),
                         "EEX": KeyStroke(operation: .exponent),
@@ -27,6 +20,7 @@ struct DecimalKeypad: Keypad {
                         "/": KeyStroke(operation: .divide),
                         "ENTER": KeyStroke(operation: .enter)]
 
+    // Buttons displayed by this keypad.
     let key: [[Key]] = [
         [Key((5,4), symbol: "ENTER", columns: 2, color: Color(.gray)),
          Key((5,4), symbol: "+/-", color: Color(.gray)),
@@ -53,107 +47,93 @@ struct DecimalKeypad: Keypad {
          Key((5,4), symbol: "+", color: Color(.orange))]
     ]
     
-    mutating func clearMantisa() {
-        mantisaText = ""
-        exponentText = ""
-        negateMantisa = false
-        negateExponent = false
-        parsingMantisa = true
-    }
-    
-    // Accept the next keySymbol and parse mantisa and/or exponent.
-    mutating func parse(_ keySymbol: String) {
-        if validNumbers.contains(keySymbol) {
-            if parsingMantisa {
-                if mantisaText.count < 15 {
-                    mantisaText += keySymbol
-                }
-            } else {
-                if exponentText.count < 3 && keySymbol != "." {
-                    exponentText += keySymbol
-                }
-            }
-        } else if let operationToken = operationMap[keySymbol] {
+    func parse(_ keySymbol: String) -> Bool {
+        if stack.parse(keySymbol) {
+            return true
+        }
+        if let operationToken = operationMap[keySymbol] {
             switch operationToken.operation {
             case .negate:
-                if parsingMantisa {
-                    negateMantisa = !negateMantisa
+                if stack.parsingMantisa {
+                    stack.negateMantisa = !stack.negateMantisa
                 } else {
-                    negateExponent = !negateExponent
+                    stack.negateExponent = !stack.negateExponent
                 }
             case .delete:
-                if mantisaText.count == 0 {
+                if stack.mantisaText.count == 0 {
                     stack.drop()
                 }
-                clearMantisa()
+                stack.clearMantisa()
             case .exponent:
-                parsingMantisa = false
+                stack.parsingMantisa = false
             case .add:
                 // First see if there is a valid value in the mantisa.
-                if let z = Double(mantisaText) {
+                if let z = Double(stack.mantisaText) {
                     if stack.stackDepth() >= 1 {
-                        let y = stack.pop().decimalValue + z
+                        let y = stack.pop()!.decimalValue + z
                         stack.push(StackItem(empty: false, decimalValue: y))
                     }
                 } else if stack.stackDepth() >= 2 {
-                    let x = stack.pop().decimalValue
+                    let x = stack.pop()!.decimalValue
                     stack.stackItems[0].decimalValue += x
                 }
-                clearMantisa()
+                stack.clearMantisa()
             case .subtract:
                 // First see if there is a valid value in the mantisa.
-                if let z = Double(mantisaText) {
+                if let z = Double(stack.mantisaText) {
                     if stack.stackDepth() >= 1 {
-                        let y = stack.pop().decimalValue - z
+                        let y = stack.pop()!.decimalValue - z
                         stack.push(StackItem(empty: false, decimalValue: y))
                     }
                 } else if stack.stackDepth() >= 2 {
-                    let x = stack.pop().decimalValue
+                    let x = stack.pop()!.decimalValue
                     stack.stackItems[0].decimalValue -= x
                 }
-                clearMantisa()
+                stack.clearMantisa()
             case .multiply:
                 // First see if there is a valid value in the mantisa.
-                if let z = Double(mantisaText) {
+                if let z = Double(stack.mantisaText) {
                     if stack.stackDepth() >= 1 {
-                        let y = stack.pop().decimalValue * z
+                        let y = stack.pop()!.decimalValue * z
                         stack.push(StackItem(empty: false, decimalValue: y))
                     }
                 } else if stack.stackDepth() >= 2 {
-                    let x = stack.pop().decimalValue
+                    let x = stack.pop()!.decimalValue
                     stack.stackItems[0].decimalValue *= x
                 }
-                clearMantisa()
+                stack.clearMantisa()
             case .divide:
                 // First see if there is a valid value in the mantisa.
-                if let z = Double(mantisaText) {
+                if let z = Double(stack.mantisaText) {
                     if stack.stackDepth() >= 1 {
-                        let y = stack.pop().decimalValue / z
+                        let y = stack.pop()!.decimalValue / z
                         stack.push(StackItem(empty: false, decimalValue: y))
                     }
                 } else if stack.stackDepth() >= 2 {
-                    let x = stack.pop().decimalValue
+                    let x = stack.pop()!.decimalValue
                     stack.stackItems[0].decimalValue /= x
                 }
-                clearMantisa()
+                stack.clearMantisa()
             case .enter:
-                var text = negateMantisa ? "-" : ""
-                text += mantisaText
-                if exponentText.count > 0 {
+                var text = stack.negateMantisa ? "-" : ""
+                text += stack.mantisaText
+                if stack.exponentText.count > 0 {
                     text += "e"
-                    text += negateExponent ? "-" : ""
-                    text += exponentText
+                    text += stack.negateExponent ? "-" : ""
+                    text += stack.exponentText
                 }
                 if let v = Double(text) {
                     stack.push(StackItem(empty: false, decimalValue: v))
                 } else {
                     stack.push(stack.stackItems[0])
                 }
-                clearMantisa()
+                stack.clearMantisa()
             default:
-                entryValue = 0.0
+                stack.clearMantisa()
             }
+            return true
         }
+        return false
     }
 }
 

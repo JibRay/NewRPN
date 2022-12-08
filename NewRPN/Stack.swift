@@ -7,39 +7,14 @@
 
 import SwiftUI
 
-enum KeyType {
-    case number, operation
-}
-
 enum Radix {
     case octal, decimal, hexidecimal
-}
-
-enum KeyOperation {
-    case none, delete, negate, exponent, add, subtract, multiply, divide, enter
-    case over, swap, pick, drop
 }
 
 struct StackItem {
     var empty: Bool = true
     var decimalValue: Double = 0.0
     var integerValue: Int64 = 0
-}
-
-struct KeyStroke {
-    var type: KeyType = .number
-    var value: Character = "0"
-    var operation: KeyOperation = .none
-    
-    init(value: Character) {
-        self.value = value
-        type = .number
-    }
-    
-    init(operation: KeyOperation) {
-        self.operation = operation
-        type = .operation
-    }
 }
 
 struct Stack {
@@ -62,7 +37,6 @@ struct Stack {
     
     var mantisaText: String = ""
     var exponentText: String = ""
-    var entryValue: Double = 0.0
     var parsingMantisa = true
     var negateMantisa = false
     var negateExponent = false
@@ -82,6 +56,24 @@ struct Stack {
                         "PICK": KeyStroke(operation: .pick),
                         "DROP": KeyStroke(operation: .drop)]
 
+    mutating func getEntryOrStackValue() -> Double? {
+        var value: Double? = 0.0
+        var text = negateMantisa ? "-" : ""
+        text += mantisaText
+        if exponentText.count > 0 {
+            text += "e"
+            text += negateExponent ? "-" : ""
+            text += exponentText
+        }
+        if let v = Double(text) {
+            value = v
+        } else {
+            value = pop()!.decimalValue
+        }
+        clearMantisa()
+        return value
+    }
+    
     // If negative is true prepend a "-" number.
     func negateNumberString(_ number: String, negative: Bool) -> String {
         if negative {
@@ -152,7 +144,7 @@ struct Stack {
         stackItems[0] = item
     }
     
-    mutating func pop() -> StackItem {
+    mutating func pop() -> StackItem? {
         let top = stackItems[0]
         for index in 1..<stackSize {
             stackItems[index - 1] = stackItems[index]
@@ -192,8 +184,9 @@ struct Stack {
         }
     }
     
-    // Accept the next keySymbol and parse mantisa and/or exponent.
-    mutating func parse(_ keySymbol: String) {
+    // If keySymbol is a valid number in the current radix,
+    // process it and return true. Otherwise return false.
+    mutating func parse(_ keySymbol: String) -> Bool {
         if radix == .octal && validOctalNumbers.contains(keySymbol)
             || radix == .decimal && validDecimalNumbers.contains(keySymbol)
             || radix == .hexidecimal && validHexNumbers.contains(keySymbol) {
@@ -206,104 +199,8 @@ struct Stack {
                     exponentText += keySymbol
                 }
             }
-        } else if let operationToken = operationMap[keySymbol] {
-            switch operationToken.operation {
-            case .negate:
-                if parsingMantisa {
-                    negateMantisa = !negateMantisa
-                } else {
-                    negateExponent = !negateExponent
-                }
-            case .delete:
-                if mantisaText.count == 0 {
-                    drop()
-                }
-                clearMantisa()
-            case .exponent:
-                if (mantisaText.count > 0 && radix == .decimal) {
-                    parsingMantisa = false
-                }
-            case .add:
-                // First see if there is a valid value in the mantisa.
-                if let z = Double(mantisaText) {
-                    if stackDepth() >= 1 {
-                        let y = pop().decimalValue + z
-                        push(StackItem(empty: false, decimalValue: y))
-                    }
-                } else if stackDepth() >= 2 {
-                    let x = pop().decimalValue
-                    stackItems[0].decimalValue += x
-                }
-                clearMantisa()
-            case .subtract:
-                // First see if there is a valid value in the mantisa.
-                if let z = Double(mantisaText) {
-                    if stackDepth() >= 1 {
-                        let y = pop().decimalValue - z
-                        push(StackItem(empty: false, decimalValue: y))
-                    }
-                } else if stackDepth() >= 2 {
-                    let x = pop().decimalValue
-                    stackItems[0].decimalValue -= x
-                }
-                clearMantisa()
-            case .multiply:
-                // First see if there is a valid value in the mantisa.
-                if let z = Double(mantisaText) {
-                    if stackDepth() >= 1 {
-                        let y = pop().decimalValue * z
-                        push(StackItem(empty: false, decimalValue: y))
-                    }
-                } else if stackDepth() >= 2 {
-                    let x = pop().decimalValue
-                    stackItems[0].decimalValue *= x
-                }
-                clearMantisa()
-            case .divide:
-                // First see if there is a valid value in the mantisa.
-                if let z = Double(mantisaText) {
-                    if stackDepth() >= 1 {
-                        let y = pop().decimalValue / z
-                        push(StackItem(empty: false, decimalValue: y))
-                    }
-                } else if stackDepth() >= 2 {
-                    let x = pop().decimalValue
-                    stackItems[0].decimalValue /= x
-                }
-                clearMantisa()
-            case .enter:
-                var text = negateMantisa ? "-" : ""
-                text += mantisaText
-                if exponentText.count > 0 {
-                    text += "e"
-                    text += negateExponent ? "-" : ""
-                    text += exponentText
-                }
-                if let v = Double(text) {
-                    push(StackItem(empty: false, decimalValue: v))
-                } else {
-                    push(stackItems[0])
-                }
-                mantisaText = ""
-                exponentText = ""
-                negateMantisa = false
-                negateExponent = false
-                parsingMantisa = true
-            case .over:
-                over()
-                clearMantisa()
-            case .swap:
-                swap()
-            case .pick:
-                if let n = Int(mantisaText) {
-                    pick(n - 1)
-                }
-                clearMantisa()
-            case .drop:
-                drop()
-            default:
-                entryValue = 0.0
-            }
+            return true
         }
+        return false
     }
 }

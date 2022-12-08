@@ -10,9 +10,6 @@ import SwiftUI
 struct ContentView: View {
     @State var stack = Stack()
     
-    let baseEngineeringKeypad = BaseEngineeringKeypad()
-    let stackKeypad = StackKeypad()
-    
     var body: some View {
         ZStack {
             Color.black.edgesIgnoringSafeArea(.all)
@@ -40,8 +37,8 @@ struct ContentView: View {
                 }
                 
                 // Keypads display.
-                KeypadView(stack: $stack, keypad: baseEngineeringKeypad)
-                KeypadView(stack: $stack, keypad: stackKeypad)
+                KeypadView(stack: $stack, keypad: BaseEngineeringKeypad(stack: $stack))
+                KeypadView(stack: $stack, keypad: BaseStackKeypad(stack: $stack))
                 KeypadView(stack: $stack, keypad: DecimalKeypad(stack: $stack))
             }
         }

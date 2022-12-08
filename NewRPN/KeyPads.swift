@@ -7,6 +7,33 @@
 
 import SwiftUI
 
+enum KeyType {
+    case number, operation
+}
+
+enum KeyOperation {
+    case none, delete, negate, exponent, add, subtract, multiply, divide, enter
+    case over, swap, pick, drop
+    case sin, cos, tan, sqrt, YtoX, invertX
+    case asin, acos, atan, Xsquared, tenToX, eToX
+}
+
+struct KeyStroke {
+    var type: KeyType = .number
+    var value: Character = "0"
+    var operation: KeyOperation = .none
+    
+    init(value: Character) {
+        self.value = value
+        type = .number
+    }
+    
+    init(operation: KeyOperation) {
+        self.operation = operation
+        type = .operation
+    }
+}
+
 struct Key: Hashable {
     var geometry: (Int, Int) // The geometry of the keypad that contains
                              // this key: (rowCount, columnCount)
@@ -49,8 +76,10 @@ struct Key: Hashable {
 }
 
 protocol Keypad {
+    var stack: Stack { get set }
     var key: [[Key]] { get }
     var fontSize: CGFloat { get }
+    func parse(_ keySymbol: String) -> Bool
 }
 
 struct KeypadView: View {
@@ -63,7 +92,7 @@ struct KeypadView: View {
             HStack {
                 ForEach(row, id: \.self) { key in
                     Button(action: {
-                        stack.parse(key.symbol)
+                        _ = keypad.parse(key.symbol)
                     }, label: {
                         Text(key.symbol)
                             .font(.system(size: keypad.fontSize))
@@ -78,35 +107,3 @@ struct KeypadView: View {
     }
 }
 
-struct StackKeypad: Keypad {
-    let fontSize: CGFloat = 20
-    
-    let key: [[Key]] = [
-        [Key((1,4), symbol: "OVER", color: Color(.gray)),
-         Key((1,4), symbol: "SWAP", color: Color(.gray)),
-         Key((1,4), symbol: "PICK", color: Color(.gray)),
-         Key((1,4), symbol: "DROP", color: Color(.gray))]
-    ]
-
-}
-
-struct BaseEngineeringKeypad: Keypad {
-    let fontSize: CGFloat = 20
-    
-    let key: [[Key]] = [
-        [Key((2,6), symbol: "SIN", color: Color(.blue)),
-         Key((2,6), symbol: "COS", color: Color(.blue)),
-         Key((2,6), symbol: "TAN", color: Color(.blue)),
-         // Key((2,6), symbol: "\(Image(systemName: "x.squareroot"))", color: Color(.blue)),
-         Key((2,6), symbol: "SQRT", color: Color(.blue)),
-         Key((2,6), symbol: "yX", color: Color(.blue)),
-         Key((2,6), symbol: "1/x", color: Color(.blue))],
-        
-        [Key((2,6), symbol: "ASIN", color: Color(.blue)),
-         Key((2,6), symbol: "ACOS", color: Color(.blue)),
-         Key((2,6), symbol: "ATAN", color: Color(.blue)),
-         Key((2,6), symbol: "x2", color: Color(.blue)),
-         Key((2,6), symbol: "10X", color: Color(.blue)),
-         Key((2,6), symbol: "eX", color: Color(.blue))]
-    ]
-}
