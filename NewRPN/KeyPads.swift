@@ -13,6 +13,7 @@ enum KeyType {
 
 enum KeyOperation {
     case none, delete, negate, exponent, add, subtract, multiply, divide, enter
+    case selectOctal, selectDecimal, selectHexadecimal, switchRadix
     case over, swap, pick, drop
     case sin, cos, tan, sqrt, YtoX, invertX
     case asin, acos, atan, Xsquared, tenToX, eToX
@@ -85,7 +86,7 @@ protocol Keypad {
 struct KeypadView: View {
     @Binding var stack: Stack
     
-    let keypad: any Keypad
+    var keypad: any Keypad
     
     var body: some View {
         ForEach(keypad.key, id: \.self) { row in

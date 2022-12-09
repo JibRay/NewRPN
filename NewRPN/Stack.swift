@@ -7,8 +7,10 @@
 
 import SwiftUI
 
-enum Radix {
-    case octal, decimal, hexidecimal
+enum Radix: Int {
+    case octal = 8
+    case decimal = 10
+    case hexidecimal = 16
 }
 
 struct StackItem {
@@ -50,6 +52,7 @@ struct Stack {
     let stackSize = 5
     // Top of the stack is [0] and bottom is [4].
     var stackItems = [StackItem](repeating: StackItem(), count: 5)
+    var entryValuePrefix: String = ""
     var entryValueText: String {
         get {
             var text: String
@@ -59,24 +62,14 @@ struct Stack {
                 text = negateNumberString(mantisaText, negative: negateMantisa)
                     + "e" + negateNumberString(exponentText, negative: negateExponent)
             }
+            if text.count > 0 {
+                return entryValuePrefix + text
+            }
             return text
         }
     }
     
-    // FIXME: For now everything is assumed to be decimal.
     var radix: Radix = .decimal
-    var radixLabel: String {
-        get {
-            switch radix {
-            case .decimal:
-                return ""
-            case .hexidecimal:
-                return "Hex:"
-            case .octal:
-                return "Oct:"
-            }
-        }
-    }
     
     var mantisaText: String = ""
     var exponentText: String = ""
@@ -141,25 +134,25 @@ struct Stack {
             return ""
         } else { // FIXME: Values do not display correctly in all cases.
             switch radix {
-            case .decimal:
-                if ((stackItems[index].decimalValue < 0.00000001 && stackItems[index].decimalValue > 0.0)
-                    || (stackItems[index].decimalValue > 999999999.999999)
-                    || (stackItems[index].decimalValue < -999999999.999999)
-                    || (stackItems[index].decimalValue > -0.00000001) && stackItems[index].decimalValue < 0.0) {
-                    let formatter = NumberFormatter()
-                    formatter.numberStyle = .scientific
-                    formatter.positiveFormat = "0.########E+0"
-                    formatter.exponentSymbol = "e"
-                    if let etext = formatter.string(for: stackItems[index].decimalValue) {
-                        text = etext
+                case .decimal:
+                    if ((stackItems[index].decimalValue < 0.00000001 && stackItems[index].decimalValue > 0.0)
+                        || (stackItems[index].decimalValue > 999999999.999999)
+                        || (stackItems[index].decimalValue < -999999999.999999)
+                        || (stackItems[index].decimalValue > -0.00000001) && stackItems[index].decimalValue < 0.0) {
+                        let formatter = NumberFormatter()
+                        formatter.numberStyle = .scientific
+                        formatter.positiveFormat = "0.########E+0"
+                        formatter.exponentSymbol = "e"
+                        if let etext = formatter.string(for: stackItems[index].decimalValue) {
+                            text = etext
+                        } else {
+                            text = ""
+                        }
                     } else {
-                        text = ""
+                        text = String(format: "%0.8f", stackItems[index].decimalValue)
                     }
-                } else {
-                    text = String(format: "%0.8f", stackItems[index].decimalValue)
-                }
                 case .octal:
-                    text = String(format: "o:%X", stackItems[index].integerValue)
+                    text = String(format: "o:%O", stackItems[index].integerValue)
                 case .hexidecimal:
                     text = String(format: "x:%X", stackItems[index].integerValue)
                 }

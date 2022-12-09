@@ -39,7 +39,7 @@ struct ContentView: View {
                 // Keypads display.
                 KeypadView(stack: $stack, keypad: BaseEngineeringKeypad(stack: $stack))
                 KeypadView(stack: $stack, keypad: BaseStackKeypad(stack: $stack))
-                KeypadView(stack: $stack, keypad: HexadecimalKeypad(stack: $stack))
+                KeypadView(stack: $stack, keypad: IntegerKeypad(stack: $stack))
             }
         }
     }
