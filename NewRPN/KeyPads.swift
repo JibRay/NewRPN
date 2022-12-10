@@ -38,14 +38,15 @@ struct KeyStroke {
 struct Key: Hashable {
     var geometry: (Int, Int) // The geometry of the keypad that contains
                              // this key: (rowCount, columnCount)
+    var icon: Bool = false
     var symbol: String
     var rows: Int = 1      // Number of rows this key occupies.
     var columns: Int = 1   // Number of columns this key occupies.
     var color: Color
     
-    
-    init(_ geometry: (Int, Int), symbol: String, rows: Int = 1, columns: Int = 1, color: Color) {
+    init(_ geometry: (Int, Int), icon: Bool = false, symbol: String, rows: Int = 1, columns: Int = 1, color: Color) {
         self.geometry = geometry
+        self.icon = icon
         self.symbol = symbol
         self.rows = rows
         self.columns = columns
@@ -65,7 +66,7 @@ struct Key: Hashable {
     func width() -> CGFloat {
         let cc: CGFloat = CGFloat(geometry.1)
         let n: CGFloat = CGFloat(columns)
-        let w = n * ((UIScreen.main.bounds.width - (((cc - 1) * 10) + 20)) / cc)
+        let w = n * ((UIScreen.main.bounds.width - (((cc - 1) * 10) + 10)) / cc)
         return w
     }
     
@@ -95,12 +96,20 @@ struct KeypadView: View {
                     Button(action: {
                         _ = keypad.parse(key.symbol)
                     }, label: {
-                        Text(key.symbol)
-                            .font(.system(size: keypad.fontSize))
-                            .frame(width: key.width(), height: key.height())
-                            .background(key.color)
-                            .foregroundColor(Color.white)
-                            .cornerRadius(0.3 * keypad.fontSize)
+                        if key.icon {
+                            Image(systemName: key.symbol)
+                                .frame(width: key.width(), height: key.height())
+                                .background(key.color)
+                                .foregroundColor(Color.white)
+                                .cornerRadius(0.3 * keypad.fontSize)
+                        } else {
+                            Text(key.symbol)
+                                .font(.system(size: keypad.fontSize))
+                                .frame(width: key.width(), height: key.height())
+                                .background(key.color)
+                                .foregroundColor(Color.white)
+                                .cornerRadius(0.3 * keypad.fontSize)
+                        }
                     })
                 }
             }

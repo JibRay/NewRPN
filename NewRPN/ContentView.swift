@@ -11,35 +11,47 @@ struct ContentView: View {
     @State var stack = Stack()
     
     var body: some View {
-        ZStack {
-            Color.black.edgesIgnoringSafeArea(.all)
-            Spacer()
-            VStack {
+        NavigationView {
+            ZStack {
+                Color.black.edgesIgnoringSafeArea(.all)
                 Spacer()
-                ForEach(0 ..< 5) { i in
+                VStack {
+                    Spacer()
+                    ForEach(0 ..< 5) { i in
+                        HStack {
+                            Spacer()
+                            Text("\(stack.stackItemText(4 - i))")
+                                .bold()
+                                .font(.system(size: 32))
+                                .monospaced()
+                                .foregroundColor(.white)
+                                .padding(.trailing, 20)
+                        }
+                    }
                     HStack {
-                        Spacer()
-                        Text("\(stack.stackItemText(4 - i))")
+                        Text(stack.entryValueText)
                             .bold()
                             .font(.system(size: 32))
                             .monospaced()
-                            .foregroundColor(.white)
-                            .padding(.trailing, 20)
+                            .foregroundColor(.yellow)
+                        Spacer()
                     }
+                    
+                    // Keypads display.
+                    KeypadView(stack: $stack, keypad: BaseEngineeringKeypad(stack: $stack))
+                    KeypadView(stack: $stack, keypad: BaseStackKeypad(stack: $stack))
+                    KeypadView(stack: $stack, keypad: IntegerKeypad(stack: $stack))
                 }
-                HStack {
-                    Text(stack.entryValueText)
-                        .bold()
-                        .font(.system(size: 32))
-                        .monospaced()
-                        .foregroundColor(.yellow)
-                    Spacer()
-                }
-                
-                // Keypads display.
-                KeypadView(stack: $stack, keypad: BaseEngineeringKeypad(stack: $stack))
-                KeypadView(stack: $stack, keypad: BaseStackKeypad(stack: $stack))
-                KeypadView(stack: $stack, keypad: IntegerKeypad(stack: $stack))
+            }
+            .toolbar {
+                Button(action: {
+                    
+                }, label: {
+                    Label("Options", systemImage: "gear")
+                        .foregroundColor(Color.white)
+//                    Image(systemName: "gear")
+//                        .foregroundColor(Color.white)
+                })
             }
         }
     }

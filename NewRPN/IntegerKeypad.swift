@@ -18,7 +18,7 @@ struct IntegerKeypad: Keypad {
                         "+": KeyStroke(operation: .add),
                         "-": KeyStroke(operation: .subtract),
                         "x": KeyStroke(operation: .multiply),
-                        "/": KeyStroke(operation: .divide),
+                        "divide": KeyStroke(operation: .divide),
                         "ENTER": KeyStroke(operation: .enter),
                         "o": KeyStroke(operation: .selectOctal),
                         "d:": KeyStroke(operation: .selectDecimal),
@@ -40,7 +40,7 @@ struct IntegerKeypad: Keypad {
          Key((5,5), symbol: "D", color: Color(.brown)),
          Key((5,5), symbol: "E", color: Color(.brown)),
          Key((5,5), symbol: "F", color: Color(.brown)),
-         Key((5,5), symbol: "/", color: Color(.orange))],
+         Key((5,5), icon: true, symbol: "divide", color: Color(.orange))],
         
         [Key((5,5), symbol: "8", color: Color(.brown)),
          Key((5,5), symbol: "9", color: Color(.brown)),

@@ -17,7 +17,7 @@ struct DecimalKeypad: Keypad {
                         "+": KeyStroke(operation: .add),
                         "-": KeyStroke(operation: .subtract),
                         "x": KeyStroke(operation: .multiply),
-                        "/": KeyStroke(operation: .divide),
+                        "divide": KeyStroke(operation: .divide),
                         "ENTER": KeyStroke(operation: .enter)]
 
     // Buttons displayed by this keypad.
@@ -29,7 +29,7 @@ struct DecimalKeypad: Keypad {
         [Key((5,4), symbol: "7", color: Color(.brown)),
          Key((5,4), symbol: "8", color: Color(.brown)),
          Key((5,4), symbol: "9", color: Color(.brown)),
-         Key((5,4), symbol: "/", color: Color(.orange))],
+         Key((5,4), icon: true, symbol: "divide", color: Color(.orange))],
         
         [Key((5,4), symbol: "4", color: Color(.brown)),
          Key((5,4), symbol: "5", color: Color(.brown)),

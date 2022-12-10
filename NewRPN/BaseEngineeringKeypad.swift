@@ -15,7 +15,7 @@ struct BaseEngineeringKeypad: Keypad {
     let operationMap = ["SIN": KeyStroke(operation: .sin),
                         "COS": KeyStroke(operation: .cos),
                         "TAN": KeyStroke(operation: .tan),
-                        "SQRT": KeyStroke(operation: .sqrt),
+                        "x.squareroot": KeyStroke(operation: .sqrt),
                         "yX": KeyStroke(operation: .YtoX),
                         "1/x": KeyStroke(operation: .invertX),
                         "ASIN": KeyStroke(operation: .asin),
@@ -30,8 +30,7 @@ struct BaseEngineeringKeypad: Keypad {
         [Key((2,6), symbol: "SIN", color: Color(.blue)),
          Key((2,6), symbol: "COS", color: Color(.blue)),
          Key((2,6), symbol: "TAN", color: Color(.blue)),
-         // FIXME: Key((2,6), symbol: "\(Image(systemName: "x.squareroot"))", color: Color(.blue)),
-         Key((2,6), symbol: "SQRT", color: Color(.blue)),
+         Key((2,6), icon: true, symbol: "x.squareroot", color: Color(.blue)),
          Key((2,6), symbol: "yX", color: Color(.blue)),
          Key((2,6), symbol: "1/x", color: Color(.blue))],
         
