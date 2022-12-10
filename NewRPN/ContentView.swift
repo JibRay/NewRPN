@@ -7,8 +7,14 @@
 
 import SwiftUI
 
+enum EntryKeys {
+    case decimal, integer
+}
+
 struct ContentView: View {
     @State var stack = Stack()
+    @State private var isShowingSettings = false
+    @State private var entryKeys: EntryKeys = .decimal
     
     var body: some View {
         NavigationView {
@@ -40,20 +46,44 @@ struct ContentView: View {
                     // Keypads display.
                     KeypadView(stack: $stack, keypad: BaseEngineeringKeypad(stack: $stack))
                     KeypadView(stack: $stack, keypad: BaseStackKeypad(stack: $stack))
-                    KeypadView(stack: $stack, keypad: IntegerKeypad(stack: $stack))
+                    switch entryKeys {
+                    case .decimal:
+                        KeypadView(stack: $stack, keypad: DecimalKeypad(stack: $stack))
+                    case .integer:
+                        KeypadView(stack: $stack, keypad: IntegerKeypad(stack: $stack))
+                    }
                 }
             }
             .toolbar {
                 Button(action: {
-                    
+                    isShowingSettings.toggle()
                 }, label: {
-                    Label("Options", systemImage: "gear")
+                    Image(systemName: "gear")
                         .foregroundColor(Color.white)
-//                    Image(systemName: "gear")
-//                        .foregroundColor(Color.white)
                 })
+                .sheet(isPresented: $isShowingSettings, onDismiss: didDismissSettings) {
+                    VStack {
+                        HStack {
+                            Text("Entry:")
+                            Button("Decimal",
+                                   action: {
+                                entryKeys = .decimal
+                            })
+                            Button("Integer",
+                                   action: {
+                                entryKeys = .integer
+                            })
+                        }
+                        Spacer()
+                        Button("Close",
+                               action: {isShowingSettings.toggle()})
+                    }
+                }
             }
         }
+    }
+    func didDismissSettings() {
+        
     }
 }
 
