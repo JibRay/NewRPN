@@ -19,10 +19,10 @@ struct BaseStackKeypad: Keypad {
 
     // Buttons displayed by this keypad.
     let key: [[Key]] = [
-        [Key((1,4), symbol: "OVER", color: Color(.gray)),
-         Key((1,4), symbol: "SWAP", color: Color(.gray)),
-         Key((1,4), symbol: "PICK", color: Color(.gray)),
-         Key((1,4), symbol: "DROP", color: Color(.gray))]
+        [Key((1,4), symbol: "OVER", color: Color.AppColor.stack),
+         Key((1,4), symbol: "SWAP", color: Color.AppColor.stack),
+         Key((1,4), symbol: "PICK", color: Color.AppColor.stack),
+         Key((1,4), symbol: "DROP", color: Color.AppColor.stack)]
     ]
     
     func parse(_ keySymbol: String) -> Bool {

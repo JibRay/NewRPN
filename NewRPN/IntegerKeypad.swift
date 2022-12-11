@@ -27,38 +27,38 @@ struct IntegerKeypad: Keypad {
 
     // Buttons displayed by this keypad.
     let key: [[Key]] = [
-        [Key((5,5), symbol: "ENTER", columns: 2, color: Color(.gray)),
-         Key((5,5), symbol: "+/-", color: Color(.gray)),
-         Key((5,5), symbol: "DEL", columns: 2, color: Color(.gray))],
+        [Key((5,5), symbol: "ENTER", columns: 2, color: Color.AppColor.enter),
+         Key((5,5), symbol: "+/-", color: Color.AppColor.enter),
+         Key((5,5), symbol: "DEL", columns: 2, color: Color.AppColor.enter)],
         
-        [Key((5,5), symbol: "o:", color: Color(.gray)),
-         Key((5,5), symbol: "d:", color: Color(.gray)),
-         Key((5,5), symbol: "x:", color: Color(.gray)),
-         Key((5,5), symbol: "<->", columns: 2, color: Color(.gray))],
+        [Key((5,5), symbol: "o:", color: Color.AppColor.enter),
+         Key((5,5), symbol: "d:", color: Color.AppColor.enter),
+         Key((5,5), symbol: "x:", color: Color.AppColor.enter),
+         Key((5,5), symbol: "<->", columns: 2, color: Color.AppColor.enter)],
         
-        [Key((5,5), symbol: "C", color: Color(.brown)),
-         Key((5,5), symbol: "D", color: Color(.brown)),
-         Key((5,5), symbol: "E", color: Color(.brown)),
-         Key((5,5), symbol: "F", color: Color(.brown)),
-         Key((5,5), icon: true, symbol: "divide", color: Color(.orange))],
+        [Key((5,5), symbol: "C", color: Color.AppColor.numbers),
+         Key((5,5), symbol: "D", color: Color.AppColor.numbers),
+         Key((5,5), symbol: "E", color: Color.AppColor.numbers),
+         Key((5,5), symbol: "F", color: Color.AppColor.numbers),
+         Key((5,5), icon: true, symbol: "divide", color: Color.AppColor.operators)],
         
-        [Key((5,5), symbol: "8", color: Color(.brown)),
-         Key((5,5), symbol: "9", color: Color(.brown)),
-         Key((5,5), symbol: "A", color: Color(.brown)),
-         Key((5,5), symbol: "B", color: Color(.brown)),
-         Key((5,5), symbol: "x", color: Color(.orange))],
+        [Key((5,5), symbol: "8", color: Color.AppColor.numbers),
+         Key((5,5), symbol: "9", color: Color.AppColor.numbers),
+         Key((5,5), symbol: "A", color: Color.AppColor.numbers),
+         Key((5,5), symbol: "B", color: Color.AppColor.numbers),
+         Key((5,5), symbol: "x", color: Color.AppColor.operators)],
 
-        [Key((5,5), symbol: "4", color: Color(.brown)),
-         Key((5,5), symbol: "5", color: Color(.brown)),
-         Key((5,5), symbol: "6", color: Color(.brown)),
-         Key((5,5), symbol: "7", color: Color(.brown)),
-         Key((5,5), symbol: "-", color: Color(.orange))],
+        [Key((5,5), symbol: "4", color: Color.AppColor.numbers),
+         Key((5,5), symbol: "5", color: Color.AppColor.numbers),
+         Key((5,5), symbol: "6", color: Color.AppColor.numbers),
+         Key((5,5), symbol: "7", color: Color.AppColor.numbers),
+         Key((5,5), symbol: "-", color: Color.AppColor.operators)],
         
-        [Key((5,5), symbol: "0", color: Color(.brown)),
-         Key((5,5), symbol: "1", color: Color(.brown)),
-         Key((5,5), symbol: "2", color: Color(.brown)),
-         Key((5,5), symbol: "3", color: Color(.brown)),
-         Key((5,5), symbol: "+", color: Color(.orange))]
+        [Key((5,5), symbol: "0", color: Color.AppColor.numbers),
+         Key((5,5), symbol: "1", color: Color.AppColor.numbers),
+         Key((5,5), symbol: "2", color: Color.AppColor.numbers),
+         Key((5,5), symbol: "3", color: Color.AppColor.numbers),
+         Key((5,5), symbol: "+", color: Color.AppColor.operators)]
     ]
     
     func parse(_ keySymbol: String) -> Bool {

@@ -17,6 +17,7 @@
 		0CCD6D40293FABE10087B453 /* BaseEngineeringKeypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD6D3F293FABE10087B453 /* BaseEngineeringKeypad.swift */; };
 		0CCD6D42293FAFA20087B453 /* BaseStackKeypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD6D41293FAFA20087B453 /* BaseStackKeypad.swift */; };
 		0CCD6D4429422CE70087B453 /* IntegerKeypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD6D4329422CE70087B453 /* IntegerKeypad.swift */; };
+		0CCD6D4629461EFE0087B453 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD6D4529461EFE0087B453 /* Style.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		0CCD6D3F293FABE10087B453 /* BaseEngineeringKeypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseEngineeringKeypad.swift; sourceTree = "<group>"; };
 		0CCD6D41293FAFA20087B453 /* BaseStackKeypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStackKeypad.swift; sourceTree = "<group>"; };
 		0CCD6D4329422CE70087B453 /* IntegerKeypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegerKeypad.swift; sourceTree = "<group>"; };
+		0CCD6D4529461EFE0087B453 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				0CCD6D3F293FABE10087B453 /* BaseEngineeringKeypad.swift */,
 				0CCD6D41293FAFA20087B453 /* BaseStackKeypad.swift */,
 				0CCD6D4329422CE70087B453 /* IntegerKeypad.swift */,
+				0CCD6D4529461EFE0087B453 /* Style.swift */,
 			);
 			path = NewRPN;
 			sourceTree = "<group>";
@@ -162,6 +165,7 @@
 				0CCD6D40293FABE10087B453 /* BaseEngineeringKeypad.swift in Sources */,
 				0CCD6D4429422CE70087B453 /* IntegerKeypad.swift in Sources */,
 				0C2772DF2936553100B9BD92 /* KeyPads.swift in Sources */,
+				0CCD6D4629461EFE0087B453 /* Style.swift in Sources */,
 				0CCD6D42293FAFA20087B453 /* BaseStackKeypad.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

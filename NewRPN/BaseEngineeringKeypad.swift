@@ -27,19 +27,19 @@ struct BaseEngineeringKeypad: Keypad {
     
     // Buttons displayed by this keypad.
     let key: [[Key]] = [
-        [Key((2,6), symbol: "SIN", color: Color(.blue)),
-         Key((2,6), symbol: "COS", color: Color(.blue)),
-         Key((2,6), symbol: "TAN", color: Color(.blue)),
-         Key((2,6), icon: true, symbol: "x.squareroot", color: Color(.blue)),
-         Key((2,6), symbol: "yX", color: Color(.blue)),
-         Key((2,6), symbol: "1/x", color: Color(.blue))],
+        [Key((2,6), symbol: "SIN", color: Color.AppColor.science),
+         Key((2,6), symbol: "COS", color: Color.AppColor.science),
+         Key((2,6), symbol: "TAN", color: Color.AppColor.science),
+         Key((2,6), icon: true, symbol: "x.squareroot", color: Color.AppColor.science),
+         Key((2,6), symbol: "yX", color: Color.AppColor.science),
+         Key((2,6), symbol: "1/x", color: Color.AppColor.science)],
         
-        [Key((2,6), symbol: "ASIN", color: Color(.blue)),
-         Key((2,6), symbol: "ACOS", color: Color(.blue)),
-         Key((2,6), symbol: "ATAN", color: Color(.blue)),
-         Key((2,6), symbol: "x2", color: Color(.blue)),
-         Key((2,6), symbol: "10X", color: Color(.blue)),
-         Key((2,6), symbol: "eX", color: Color(.blue))]
+        [Key((2,6), symbol: "ASIN", color: Color.AppColor.science),
+         Key((2,6), symbol: "ACOS", color: Color.AppColor.science),
+         Key((2,6), symbol: "ATAN", color: Color.AppColor.science),
+         Key((2,6), symbol: "x2", color: Color.AppColor.science),
+         Key((2,6), symbol: "10X", color: Color.AppColor.science),
+         Key((2,6), symbol: "eX", color: Color.AppColor.science)]
     ]
 
     func parse(_ keySymbol: String) -> Bool {
