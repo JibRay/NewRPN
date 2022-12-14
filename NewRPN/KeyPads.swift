@@ -16,7 +16,7 @@ enum KeyOperation {
     case selectOctal, selectDecimal, selectHexadecimal, switchRadix
     case over, swap, pick, drop
     case sin, cos, tan, sqrt, YtoX, invertX
-    case asin, acos, atan, Xsquared, tenToX, eToX
+    case asin, acos, atan, Xsquared, tenToX, eToX, pi, log, ln, xRootY
 }
 
 struct KeyStroke {
@@ -73,14 +73,15 @@ struct Key: Hashable {
     // rowCount is the number of rows in the column where this key resides.
     // Return the key height.
     func height() -> CGFloat {
-        return 50
+        return 35
     }
 }
 
 protocol Keypad {
     var stack: Stack { get set }
     var key: [[Key]] { get }
-    var fontSize: CGFloat { get }
+    // FIXME: make font size dynamic based on screen size.
+    var fontSize: CGFloat {get }
     func parse(_ keySymbol: String) -> Bool
 }
 

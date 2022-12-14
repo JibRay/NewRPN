@@ -49,9 +49,9 @@ struct StackItem {
 }
 
 struct Stack {
-    let stackSize = 5
+    let stackSize = 4
     // Top of the stack is [0] and bottom is [4].
-    var stackItems = [StackItem](repeating: StackItem(), count: 5)
+    var stackItems = [StackItem](repeating: StackItem(), count: 4)
     var entryValuePrefix: String = ""
     var entryValueText: String {
         get {

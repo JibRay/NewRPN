@@ -23,12 +23,12 @@ struct ContentView: View {
                 Spacer()
                 VStack {
                     Spacer()
-                    ForEach(0 ..< 5) { i in
+                    ForEach(0..<4) { i in
                         HStack {
                             Spacer()
-                            Text("\(stack.stackItemText(4 - i))")
+                            Text("\(stack.stackItemText(3 - i))")
                                 .bold()
-                                .font(.system(size: 32))
+                                .font(.system(size: 25))
                                 .monospaced()
                                 .foregroundColor(.white)
                                 .padding(.trailing, 20)
@@ -37,7 +37,7 @@ struct ContentView: View {
                     HStack {
                         Text(stack.entryValueText)
                             .bold()
-                            .font(.system(size: 32))
+                            .font(.system(size: 25))
                             .monospaced()
                             .foregroundColor(.yellow)
                         Spacer()

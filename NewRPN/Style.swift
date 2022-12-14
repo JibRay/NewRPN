@@ -13,6 +13,8 @@ extension Color {
         static var stack: Color { return Color(red: 0.429, green: 0.429, blue: 0.429)}
         static var enter: Color { return Color(red: 0.429, green: 0.429, blue: 0.429)}
         static var numbers: Color { return Color(red: 0.469, green: 0.320, blue: 0.234)}
-        static var operators: Color { return Color(red: 0.586, green: 0.352, blue: 0.0)}
+        static var operators: Color { return Color(red: 0.60, green: 0.352, blue: 0.0)}
     }
 }
+
+// FIXME: Do the same for fonts. Take in to account screen size?
