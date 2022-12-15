@@ -72,12 +72,13 @@ struct ContentView: View {
                         .foregroundColor(Color.white)
                 })
                 .sheet(isPresented: $isShowingSettings, onDismiss: didDismissSettings) {
-                    SettingsView(stack: $stack, entryKeys:
+                    SettingsView(entryKeys:
                                     $entryKeys, scienceKeys: $scienceKeys, isShowingSettings: $isShowingSettings)
                 }
             }
         }
     }
+    // FIXME: Not used, can probably be deleted.
     func didDismissSettings() {
         
     }

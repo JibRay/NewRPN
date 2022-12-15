@@ -8,29 +8,53 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @Binding var stack: Stack
     @Binding var entryKeys: EntryKeys
     @Binding var scienceKeys: ScienceKeys
     @Binding var isShowingSettings: Bool
     
+    func decimalKeypadSymbol() -> String {
+        if (entryKeys == .decimal) {
+            return "checkmark.circle"
+        } else {
+            return "circle"
+        }
+    }
+    
+    func integerKeypadSymbol() -> String {
+        if (entryKeys == .integer) {
+            return "checkmark.circle"
+        } else {
+            return "circle"
+        }
+    }
+    
     var body: some View {
-        VStack {
-            HStack {
-                Text("Entry:")
-                Button("Decimal",
-                       action: {
+        ZStack {
+            Color.gray
+            VStack(alignment: .leading) {
+                Button(action: {isShowingSettings.toggle()}, label: {
+                    Image(systemName: "arrow.left")
+                })
+                .font(.title)
+                .foregroundColor(Color.black)
+                Button(action: {
                     entryKeys = .decimal
                     scienceKeys = .baseEngineering
-                })
-                Button("Integer",
-                       action: {
+                }) {
+                    Label("Decimal Kepad", systemImage: decimalKeypadSymbol())
+                }
+                .font(.title)
+                .foregroundColor(Color.black)
+                Button(action: {
                     entryKeys = .integer
                     scienceKeys = .logic
-                })
+                }) {
+                    Label("Integer Kepad", systemImage: integerKeypadSymbol())
+                }
+                .font(.title)
+                .foregroundColor(Color.black)
+                Spacer()
             }
-            Spacer()
-            Button("Close",
-                   action: {isShowingSettings.toggle()})
         }
     }
 }

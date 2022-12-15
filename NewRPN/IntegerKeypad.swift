@@ -23,7 +23,7 @@ struct IntegerKeypad: Keypad {
                         "o:": KeyStroke(operation: .selectOctal),
                         "d:": KeyStroke(operation: .selectDecimal),
                         "x:": KeyStroke(operation: .selectHexadecimal),
-                        "<->": KeyStroke(operation: .switchRadix)]
+                        "arrowshape.zigzag.right": KeyStroke(operation: .switchRadix)]
 
     // Buttons displayed by this keypad.
     let key: [[Key]] = [
@@ -34,7 +34,7 @@ struct IntegerKeypad: Keypad {
         [Key((5,5), symbol: "o:", color: Color.AppColor.enter),
          Key((5,5), symbol: "d:", color: Color.AppColor.enter),
          Key((5,5), symbol: "x:", color: Color.AppColor.enter),
-         Key((5,5), symbol: "<->", columns: 2, color: Color.AppColor.enter)],
+         Key((5,5), icon: true, symbol: "arrowshape.zigzag.right", columns: 2, color: Color.AppColor.enter)],
         
         [Key((5,5), symbol: "C", color: Color.AppColor.numbers),
          Key((5,5), symbol: "D", color: Color.AppColor.numbers),

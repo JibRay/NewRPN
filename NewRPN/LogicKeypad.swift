@@ -16,8 +16,8 @@ struct LogicKeypad: Keypad {
                         "OR": KeyStroke(operation: .or),
                         "NOT": KeyStroke(operation: .not),
                         "XOR": KeyStroke(operation: .xor),
-                        "<-": KeyStroke(operation: .leftShift),
-                        "->": KeyStroke(operation: .rightShift)]
+                        "arrowshape.left": KeyStroke(operation: .leftShift),
+                        "arrowshape.right": KeyStroke(operation: .rightShift)]
     
     // Buttons displayed by this keypad.
     let key: [[Key]] = [
@@ -25,8 +25,8 @@ struct LogicKeypad: Keypad {
          Key((1,6), symbol:  "OR", color: Color.AppColor.science),
          Key((1,6), symbol: "NOT", color: Color.AppColor.science),
          Key((1,6), symbol: "XOR", color: Color.AppColor.science),
-         Key((1,6), symbol: "<-", color: Color.AppColor.science),
-         Key((1,6), symbol: "->", color: Color.AppColor.science)]
+         Key((1,6), icon: true, symbol: "arrowshape.left", color: Color.AppColor.science),
+         Key((1,6), icon: true, symbol: "arrowshape.right", color: Color.AppColor.science)]
     ]
 
     func parse(_ keySymbol: String) -> Bool {
