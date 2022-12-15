@@ -17,9 +17,9 @@ enum ScienceKeys {
 
 struct ContentView: View {
     @State var stack = Stack()
-    @State private var isShowingSettings = false
-    @State private var entryKeys: EntryKeys = .decimal
-    @State private var scienceKeys: ScienceKeys = .baseEngineering
+    @State var isShowingSettings = false
+    @State var entryKeys: EntryKeys = .decimal
+    @State var scienceKeys: ScienceKeys = .baseEngineering
     
     var body: some View {
         NavigationView {
@@ -72,24 +72,8 @@ struct ContentView: View {
                         .foregroundColor(Color.white)
                 })
                 .sheet(isPresented: $isShowingSettings, onDismiss: didDismissSettings) {
-                    VStack {
-                        HStack {
-                            Text("Entry:")
-                            Button("Decimal",
-                                   action: {
-                                entryKeys = .decimal
-                                scienceKeys = .baseEngineering
-                            })
-                            Button("Integer",
-                                   action: {
-                                entryKeys = .integer
-                                scienceKeys = .logic
-                            })
-                        }
-                        Spacer()
-                        Button("Close",
-                               action: {isShowingSettings.toggle()})
-                    }
+                    SettingsView(stack: $stack, entryKeys:
+                                    $entryKeys, scienceKeys: $scienceKeys, isShowingSettings: $isShowingSettings)
                 }
             }
         }

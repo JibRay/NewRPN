@@ -20,7 +20,7 @@ struct IntegerKeypad: Keypad {
                         "x": KeyStroke(operation: .multiply),
                         "divide": KeyStroke(operation: .divide),
                         "ENTER": KeyStroke(operation: .enter),
-                        "o": KeyStroke(operation: .selectOctal),
+                        "o:": KeyStroke(operation: .selectOctal),
                         "d:": KeyStroke(operation: .selectDecimal),
                         "x:": KeyStroke(operation: .selectHexadecimal),
                         "<->": KeyStroke(operation: .switchRadix)]

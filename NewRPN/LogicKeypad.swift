@@ -36,7 +36,7 @@ struct LogicKeypad: Keypad {
         if let operationToken = operationMap[keySymbol] {
             switch operationToken.operation {
             case .and:
-                if let x = Int64(stack.mantisaText) {
+                if let x = Int64(stack.mantisaText, radix: stack.radix.rawValue) {
                         stack.stackItems[0].integerValue &= x
                 } else {
                     if let y: Int64 = stack.pop()?.integerValue {
@@ -45,7 +45,7 @@ struct LogicKeypad: Keypad {
                 }
                 stack.clearMantisa()
             case .or:
-                if let x = Int64(stack.mantisaText) {
+                if let x = Int64(stack.mantisaText, radix: stack.radix.rawValue) {
                         stack.stackItems[0].integerValue |= x
                 } else {
                     if let y: Int64 = stack.pop()?.integerValue {
@@ -58,9 +58,9 @@ struct LogicKeypad: Keypad {
                     stack.stackItems[0].integerValue = ~stack.stackItems[0].integerValue
                 }
                 stack.clearMantisa()
-                case .xor:
-                    if let x = Int64(stack.mantisaText) {
-                        stack.stackItems[0].integerValue ^= x
+            case .xor:
+                if let x = Int64(stack.mantisaText, radix: stack.radix.rawValue) {
+                    stack.stackItems[0].integerValue ^= x
                 } else {
                     if let y: Int64 = stack.pop()?.integerValue {
                         stack.stackItems[0].integerValue ^= y
@@ -68,7 +68,7 @@ struct LogicKeypad: Keypad {
                 }
                 stack.clearMantisa()
             case .leftShift:
-                if let n = Int(stack.mantisaText) {
+                if let n = Int(stack.mantisaText, radix: stack.radix.rawValue) {
                     if stack.stackDepth() > 0 {
                         let x: Int64 = stack.stackItems[0].integerValue
                         stack.stackItems[0].integerValue = x << n
@@ -76,7 +76,7 @@ struct LogicKeypad: Keypad {
                 }
                 stack.clearMantisa()
             case .rightShift:
-                if let n = Int(stack.mantisaText) {
+                if let n = Int(stack.mantisaText, radix: stack.radix.rawValue) {
                     if stack.stackDepth() > 0 {
                         let x: Int64 = stack.stackItems[0].integerValue
                         stack.stackItems[0].integerValue = x >> n
