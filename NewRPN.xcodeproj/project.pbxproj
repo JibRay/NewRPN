@@ -13,6 +13,7 @@
 		0C2772D829356E8A00B9BD92 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C2772D729356E8A00B9BD92 /* Preview Assets.xcassets */; };
 		0C2772DF2936553100B9BD92 /* KeyPads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2772DE2936553100B9BD92 /* KeyPads.swift */; };
 		0C2772E129380B9000B9BD92 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2772E029380B9000B9BD92 /* Stack.swift */; };
+		0CBA44C9294A40BC000744A4 /* LogicKeypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBA44C8294A40BC000744A4 /* LogicKeypad.swift */; };
 		0CCD6D3E293E24060087B453 /* DecimalKeypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD6D3D293E24060087B453 /* DecimalKeypad.swift */; };
 		0CCD6D40293FABE10087B453 /* BaseEngineeringKeypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD6D3F293FABE10087B453 /* BaseEngineeringKeypad.swift */; };
 		0CCD6D42293FAFA20087B453 /* BaseStackKeypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD6D41293FAFA20087B453 /* BaseStackKeypad.swift */; };
@@ -28,6 +29,7 @@
 		0C2772D729356E8A00B9BD92 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0C2772DE2936553100B9BD92 /* KeyPads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPads.swift; sourceTree = "<group>"; };
 		0C2772E029380B9000B9BD92 /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		0CBA44C8294A40BC000744A4 /* LogicKeypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicKeypad.swift; sourceTree = "<group>"; };
 		0CCD6D3D293E24060087B453 /* DecimalKeypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalKeypad.swift; sourceTree = "<group>"; };
 		0CCD6D3F293FABE10087B453 /* BaseEngineeringKeypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseEngineeringKeypad.swift; sourceTree = "<group>"; };
 		0CCD6D41293FAFA20087B453 /* BaseStackKeypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStackKeypad.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				0CCD6D41293FAFA20087B453 /* BaseStackKeypad.swift */,
 				0CCD6D4329422CE70087B453 /* IntegerKeypad.swift */,
 				0CCD6D4529461EFE0087B453 /* Style.swift */,
+				0CBA44C8294A40BC000744A4 /* LogicKeypad.swift */,
 			);
 			path = NewRPN;
 			sourceTree = "<group>";
@@ -160,6 +163,7 @@
 			files = (
 				0CCD6D3E293E24060087B453 /* DecimalKeypad.swift in Sources */,
 				0C2772E129380B9000B9BD92 /* Stack.swift in Sources */,
+				0CBA44C9294A40BC000744A4 /* LogicKeypad.swift in Sources */,
 				0C2772D329356E8900B9BD92 /* ContentView.swift in Sources */,
 				0C2772D129356E8900B9BD92 /* NewRPNApp.swift in Sources */,
 				0CCD6D40293FABE10087B453 /* BaseEngineeringKeypad.swift in Sources */,

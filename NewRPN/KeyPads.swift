@@ -17,6 +17,7 @@ enum KeyOperation {
     case over, swap, pick, drop
     case sin, cos, tan, sqrt, YtoX, invertX
     case asin, acos, atan, Xsquared, tenToX, eToX, pi, log, ln, xRootY
+    case and, or, not, xor, leftShift, rightShift
 }
 
 struct KeyStroke {

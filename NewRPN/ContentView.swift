@@ -11,10 +11,15 @@ enum EntryKeys {
     case decimal, integer
 }
 
+enum ScienceKeys {
+    case baseEngineering, logic
+}
+
 struct ContentView: View {
     @State var stack = Stack()
     @State private var isShowingSettings = false
     @State private var entryKeys: EntryKeys = .decimal
+    @State private var scienceKeys: ScienceKeys = .baseEngineering
     
     var body: some View {
         NavigationView {
@@ -44,7 +49,12 @@ struct ContentView: View {
                     }
                     
                     // Keypads display.
-                    KeypadView(stack: $stack, keypad: BaseEngineeringKeypad(stack: $stack))
+                    switch scienceKeys {
+                    case .baseEngineering:
+                        KeypadView(stack: $stack, keypad: BaseEngineeringKeypad(stack: $stack))
+                    case .logic:
+                        KeypadView(stack: $stack, keypad: LogicKeypad(stack: $stack))
+                    }
                     KeypadView(stack: $stack, keypad: BaseStackKeypad(stack: $stack))
                     switch entryKeys {
                     case .decimal:
@@ -68,10 +78,12 @@ struct ContentView: View {
                             Button("Decimal",
                                    action: {
                                 entryKeys = .decimal
+                                scienceKeys = .baseEngineering
                             })
                             Button("Integer",
                                    action: {
                                 entryKeys = .integer
+                                scienceKeys = .logic
                             })
                         }
                         Spacer()

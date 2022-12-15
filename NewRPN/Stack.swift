@@ -220,12 +220,14 @@ struct Stack {
         _ = pop()
     }
     
+    /* FIXME: Is this needed?
     mutating func pick(index: Int) {
         if index < stackSize && !stackItems[index].empty {
             let item = stackItems[index]
             push(item)
         }
     }
+     */
     
     // If keySymbol is a valid number in the current radix,
     // process it and return true. Otherwise return false.
