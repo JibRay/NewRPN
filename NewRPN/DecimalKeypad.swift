@@ -29,7 +29,7 @@ struct DecimalKeypad: Keypad {
         [Key((5,4), symbol: "7", color: Color.AppColor.numbers),
          Key((5,4), symbol: "8", color: Color.AppColor.numbers),
          Key((5,4), symbol: "9", color: Color.AppColor.numbers),
-         Key((5,4), icon: true, symbol: "divide", color: Color.AppColor.operators)],
+         Key((5,4), icon: .systemSymbol, symbol: "divide", color: Color.AppColor.operators)],
         
         [Key((5,4), symbol: "4", color: Color.AppColor.numbers),
          Key((5,4), symbol: "5", color: Color.AppColor.numbers),

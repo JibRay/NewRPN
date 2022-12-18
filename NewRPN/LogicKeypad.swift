@@ -25,8 +25,8 @@ struct LogicKeypad: Keypad {
          Key((1,6), symbol:  "OR", color: Color.AppColor.science),
          Key((1,6), symbol: "NOT", color: Color.AppColor.science),
          Key((1,6), symbol: "XOR", color: Color.AppColor.science),
-         Key((1,6), icon: true, symbol: "arrowshape.left", color: Color.AppColor.science),
-         Key((1,6), icon: true, symbol: "arrowshape.right", color: Color.AppColor.science)]
+         Key((1,6), icon: .systemSymbol, symbol: "arrowshape.left", color: Color.AppColor.science),
+         Key((1,6), icon: .systemSymbol, symbol: "arrowshape.right", color: Color.AppColor.science)]
     ]
 
     func parse(_ keySymbol: String) -> Bool {

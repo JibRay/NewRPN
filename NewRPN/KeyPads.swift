@@ -11,6 +11,10 @@ enum KeyType {
     case number, operation
 }
 
+enum SymbolType {
+    case text, systemSymbol, image
+}
+
 enum KeyOperation {
     case none, delete, negate, exponent, add, subtract, multiply, divide, enter
     case selectOctal, selectDecimal, selectHexadecimal, switchRadix
@@ -39,13 +43,13 @@ struct KeyStroke {
 struct Key: Hashable {
     var geometry: (Int, Int) // The geometry of the keypad that contains
                              // this key: (rowCount, columnCount)
-    var icon: Bool = false
+    var icon: SymbolType = .text
     var symbol: String
     var rows: Int = 1      // Number of rows this key occupies.
     var columns: Int = 1   // Number of columns this key occupies.
     var color: Color
     
-    init(_ geometry: (Int, Int), icon: Bool = false, symbol: String, rows: Int = 1, columns: Int = 1, color: Color) {
+    init(_ geometry: (Int, Int), icon: SymbolType = .text, symbol: String, rows: Int = 1, columns: Int = 1, color: Color) {
         self.geometry = geometry
         self.icon = icon
         self.symbol = symbol
@@ -98,18 +102,26 @@ struct KeypadView: View {
                     Button(action: {
                         _ = keypad.parse(key.symbol)
                     }, label: {
-                        if key.icon {
+                        switch key.icon {
+                        case .systemSymbol:
                             Image(systemName: key.symbol)
                                 .frame(width: key.width(), height: key.height())
                                 .background(key.color)
                                 .foregroundColor(Color.white)
                                 .cornerRadius(0.3 * keypad.fontSize)
-                        } else {
+                        case .text:
                             Text(key.symbol)
                                 .font(.system(size: keypad.fontSize))
                                 .frame(width: key.width(), height: key.height())
                                 .background(key.color)
                                 .foregroundColor(Color.white)
+                                .cornerRadius(0.3 * keypad.fontSize)
+                        case .image:
+                            Image(key.symbol)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: key.width(), height: key.height())
+                                .background(key.color)
                                 .cornerRadius(0.3 * keypad.fontSize)
                         }
                     })

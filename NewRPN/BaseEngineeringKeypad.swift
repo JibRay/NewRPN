@@ -15,7 +15,7 @@ struct BaseEngineeringKeypad: Keypad {
     let operationMap = [" ": KeyStroke(operation: .none),
                         "_": KeyStroke(operation: .none),
                         "\u{03C0}": KeyStroke(operation: .pi),
-                        "X\\Y": KeyStroke(operation: .xRootY),
+                        "x.root.y": KeyStroke(operation: .xRootY),
                         "LOG": KeyStroke(operation: .log),
                         "LN": KeyStroke(operation: .ln),
                         "SIN": KeyStroke(operation: .sin),
@@ -27,31 +27,31 @@ struct BaseEngineeringKeypad: Keypad {
                         "ASIN": KeyStroke(operation: .asin),
                         "ACOS": KeyStroke(operation: .acos),
                         "ATAN": KeyStroke(operation: .atan),
-                        "x2": KeyStroke(operation: .Xsquared),
-                        "10X": KeyStroke(operation: .tenToX),
-                        "eX": KeyStroke(operation: .eToX)]
+                        "2.to.x": KeyStroke(operation: .Xsquared),
+                        "10.to.x": KeyStroke(operation: .tenToX),
+                        "e.to.x": KeyStroke(operation: .eToX)]
     
     // Buttons displayed by this keypad.
     let key: [[Key]] = [
         [Key((3,6), symbol: " ", color: Color.AppColor.science),
          Key((3,6), symbol:  "_", color: Color.AppColor.science),
          Key((3,6), symbol: "\u{03C0}", color: Color.AppColor.science),
-         Key((3,6), symbol: "X\\Y", color: Color.AppColor.science),
+         Key((3,6), icon: .image, symbol: "x.root.y", color: Color.AppColor.science),
          Key((3,6), symbol: "LOG", color: Color.AppColor.science),
          Key((3,6), symbol: "LN", color: Color.AppColor.science)],
         [Key((3,6), symbol: "SIN", color: Color.AppColor.science),
          Key((3,6), symbol: "COS", color: Color.AppColor.science),
          Key((3,6), symbol: "TAN", color: Color.AppColor.science),
-         Key((3,6), icon: true, symbol: "x.squareroot", color: Color.AppColor.science),
+         Key((3,6), icon: .systemSymbol, symbol: "x.squareroot", color: Color.AppColor.science),
          Key((3,6), symbol: "yX", color: Color.AppColor.science),
          Key((3,6), symbol: "1/x", color: Color.AppColor.science)],
         
         [Key((3,6), symbol: "ASIN", color: Color.AppColor.science),
          Key((3,6), symbol: "ACOS", color: Color.AppColor.science),
          Key((3,6), symbol: "ATAN", color: Color.AppColor.science),
-         Key((3,6), symbol: "x2", color: Color.AppColor.science),
-         Key((3,6), symbol: "10X", color: Color.AppColor.science),
-         Key((3,6), symbol: "eX", color: Color.AppColor.science)]
+         Key((3,6), icon: .image, symbol: "2.to.x", color: Color.AppColor.science),
+         Key((3,6), icon: .image, symbol: "10.to.x", color: Color.AppColor.science),
+         Key((3,6), icon: .image, symbol: "e.to.x", color: Color.AppColor.science)]
     ]
 
     func parse(_ keySymbol: String) -> Bool {

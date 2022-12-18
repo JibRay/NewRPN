@@ -28,11 +28,12 @@ struct ContentView: View {
                 Spacer()
                 VStack {
                     Spacer()
+                    // Display all the stack items.
                     ForEach(0..<4) { i in
                         HStack {
                             Spacer()
                             Text("\(stack.stackItemText(3 - i))")
-                                .bold()
+                                //.bold()
                                 .font(.system(size: 25))
                                 .monospaced()
                                 .foregroundColor(.white)
@@ -40,8 +41,9 @@ struct ContentView: View {
                         }
                     }
                     HStack {
+                        // Display the entry line.
                         Text(stack.entryValueText)
-                            .bold()
+                            //.bold()
                             .font(.system(size: 25))
                             .monospaced()
                             .foregroundColor(.yellow)
