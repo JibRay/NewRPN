@@ -74,7 +74,7 @@ struct ContentView: View {
                         .foregroundColor(Color.white)
                 })
                 .sheet(isPresented: $isShowingSettings, onDismiss: didDismissSettings) {
-                    SettingsView(entryKeys:
+                    SettingsView(stack: $stack, entryKeys:
                                     $entryKeys, scienceKeys: $scienceKeys, isShowingSettings: $isShowingSettings)
                 }
             }

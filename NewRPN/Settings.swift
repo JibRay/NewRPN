@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @Binding var stack: Stack
     @Binding var entryKeys: EntryKeys
     @Binding var scienceKeys: ScienceKeys
     @Binding var isShowingSettings: Bool
@@ -32,19 +33,24 @@ struct SettingsView: View {
         ZStack {
             Color.gray
             VStack(alignment: .leading) {
-                Button(action: {isShowingSettings.toggle()}, label: {
-                    Image(systemName: "arrow.left")
-                })
-                .font(.title)
-                .foregroundColor(Color.black)
+                HStack() {
+                    Button(action: {isShowingSettings.toggle()}, label: {
+                        Image(systemName: "arrow.left")
+                    })
+                    .font(.title)
+                    .foregroundColor(Color.black)
+                    Spacer()
+                }
                 Button(action: {
                     entryKeys = .decimal
                     scienceKeys = .baseEngineering
+                    stack.radix = .decimal
                 }) {
                     Label("Decimal Kepad", systemImage: decimalKeypadSymbol())
                 }
                 .font(.title)
                 .foregroundColor(Color.black)
+                .padding(.leading, 30)
                 Button(action: {
                     entryKeys = .integer
                     scienceKeys = .logic
@@ -53,6 +59,7 @@ struct SettingsView: View {
                 }
                 .font(.title)
                 .foregroundColor(Color.black)
+                .padding(.leading, 30)
                 Spacer()
             }
         }

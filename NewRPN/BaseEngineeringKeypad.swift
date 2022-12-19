@@ -13,7 +13,7 @@ struct BaseEngineeringKeypad: Keypad {
     
     // This keypad's operations.
     let operationMap = [" ": KeyStroke(operation: .none),
-                        "_": KeyStroke(operation: .none),
+                        "  ": KeyStroke(operation: .none),
                         "\u{03C0}": KeyStroke(operation: .pi),
                         "x.root.y": KeyStroke(operation: .xRootY),
                         "LOG": KeyStroke(operation: .log),
@@ -22,7 +22,7 @@ struct BaseEngineeringKeypad: Keypad {
                         "COS": KeyStroke(operation: .cos),
                         "TAN": KeyStroke(operation: .tan),
                         "x.squareroot": KeyStroke(operation: .sqrt),
-                        "yX": KeyStroke(operation: .YtoX),
+                        "y.to.x": KeyStroke(operation: .YtoX),
                         "1/x": KeyStroke(operation: .invertX),
                         "ASIN": KeyStroke(operation: .asin),
                         "ACOS": KeyStroke(operation: .acos),
@@ -34,7 +34,7 @@ struct BaseEngineeringKeypad: Keypad {
     // Buttons displayed by this keypad.
     let key: [[Key]] = [
         [Key((3,6), symbol: " ", color: Color.AppColor.science),
-         Key((3,6), symbol:  "_", color: Color.AppColor.science),
+         Key((3,6), symbol:  "  ", color: Color.AppColor.science),
          Key((3,6), symbol: "\u{03C0}", color: Color.AppColor.science),
          Key((3,6), icon: .image, symbol: "x.root.y", color: Color.AppColor.science),
          Key((3,6), symbol: "LOG", color: Color.AppColor.science),
@@ -43,7 +43,7 @@ struct BaseEngineeringKeypad: Keypad {
          Key((3,6), symbol: "COS", color: Color.AppColor.science),
          Key((3,6), symbol: "TAN", color: Color.AppColor.science),
          Key((3,6), icon: .systemSymbol, symbol: "x.squareroot", color: Color.AppColor.science),
-         Key((3,6), symbol: "yX", color: Color.AppColor.science),
+         Key((3,6), icon: .image, symbol: "y.to.x", color: Color.AppColor.science),
          Key((3,6), symbol: "1/x", color: Color.AppColor.science)],
         
         [Key((3,6), symbol: "ASIN", color: Color.AppColor.science),
