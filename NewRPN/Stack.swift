@@ -154,7 +154,7 @@ struct Stack {
                 case .octal:
                     text = String(format: "o:%O", stackItems[index].integerValue)
                 case .hexidecimal:
-                    text = String(format: "x:%X", stackItems[index].integerValue)
+                    text = String(format: "h:%X", stackItems[index].integerValue)
                 }
             }
         return text

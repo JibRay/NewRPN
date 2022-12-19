@@ -9,20 +9,24 @@ import SwiftUI
 
 struct BaseStackKeypad: Keypad {
     @Binding var stack: Stack
-    let fontSize: CGFloat = 20
+    let fontSize: CGFloat = 18
 
     // This keypad's operations.
-    let operationMap = ["OVER": KeyStroke(operation: .over),
+    let operationMap = ["STO": KeyStroke(operation: .sto),
+                        "RCL": KeyStroke(operation: .rcl),
+                        "OVER": KeyStroke(operation: .over),
                         "SWAP": KeyStroke(operation: .swap),
                         "PICK": KeyStroke(operation: .pick),
                         "DROP": KeyStroke(operation: .drop)]
 
     // Buttons displayed by this keypad.
     let key: [[Key]] = [
-        [Key((1,4), symbol: "OVER", color: Color.AppColor.stack),
-         Key((1,4), symbol: "SWAP", color: Color.AppColor.stack),
-         Key((1,4), symbol: "PICK", color: Color.AppColor.stack),
-         Key((1,4), symbol: "DROP", color: Color.AppColor.stack)]
+        [Key((1,6), symbol: "STO", color: Color.AppColor.stack),
+         Key((1,6), symbol: "RCL", color: Color.AppColor.stack),
+         Key((1,6), symbol: "OVER", color: Color.AppColor.stack),
+         Key((1,6), symbol: "SWAP", color: Color.AppColor.stack),
+         Key((1,6), symbol: "PICK", color: Color.AppColor.stack),
+         Key((1,6), symbol: "DROP", color: Color.AppColor.stack)]
     ]
     
     func parse(_ keySymbol: String) -> Bool {

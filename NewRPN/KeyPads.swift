@@ -18,10 +18,11 @@ enum SymbolType {
 enum KeyOperation {
     case none, delete, negate, exponent, add, subtract, multiply, divide, enter
     case selectOctal, selectDecimal, selectHexadecimal, switchRadix
-    case over, swap, pick, drop
+    case sto, rcl, over, swap, pick, drop
     case sin, cos, tan, sqrt, YtoX, invertX
     case asin, acos, atan, Xsquared, tenToX, eToX, pi, log, ln, xRootY
     case and, or, not, xor, leftShift, rightShift
+    case std, fix, sci, eng
 }
 
 struct KeyStroke {

@@ -12,8 +12,8 @@ struct BaseEngineeringKeypad: Keypad {
     let fontSize: CGFloat = 18
     
     // This keypad's operations.
-    let operationMap = [" ": KeyStroke(operation: .none),
-                        "  ": KeyStroke(operation: .none),
+    let operationMap = [">HMS": KeyStroke(operation: .none),
+                        "HWM>": KeyStroke(operation: .none),
                         "\u{03C0}": KeyStroke(operation: .pi),
                         "x.root.y": KeyStroke(operation: .xRootY),
                         "LOG": KeyStroke(operation: .log),
@@ -33,8 +33,8 @@ struct BaseEngineeringKeypad: Keypad {
     
     // Buttons displayed by this keypad.
     let key: [[Key]] = [
-        [Key((3,6), symbol: " ", color: Color.AppColor.science),
-         Key((3,6), symbol:  "  ", color: Color.AppColor.science),
+        [Key((3,6), symbol: ">HMS", color: Color.AppColor.science),
+         Key((3,6), symbol:  "HMS>", color: Color.AppColor.science),
          Key((3,6), symbol: "\u{03C0}", color: Color.AppColor.science),
          Key((3,6), icon: .image, symbol: "x.root.y", color: Color.AppColor.science),
          Key((3,6), symbol: "LOG", color: Color.AppColor.science),

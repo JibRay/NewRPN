@@ -11,7 +11,11 @@ struct DecimalKeypad: Keypad {
     @Binding var stack: Stack
     let fontSize: CGFloat = 25
     // This keypad's operations.
-    let operationMap = ["+/-": KeyStroke(operation: .negate),
+    let operationMap = ["STD": KeyStroke(operation: .std),
+                        "FIX": KeyStroke(operation: .fix),
+                        "SCI": KeyStroke(operation: .sci),
+                        "ENG": KeyStroke(operation: .eng),
+                        "+/-": KeyStroke(operation: .negate),
                         "DEL": KeyStroke(operation: .delete),
                         "EEX": KeyStroke(operation: .exponent),
                         "+": KeyStroke(operation: .add),
@@ -22,6 +26,11 @@ struct DecimalKeypad: Keypad {
 
     // Buttons displayed by this keypad.
     let key: [[Key]] = [
+        [Key((5,4), symbol: "STD", color: Color.AppColor.enter),
+         Key((5,4), symbol: "FIX", color: Color.AppColor.enter),
+         Key((5,4), symbol: "SCI", color: Color.AppColor.enter),
+         Key((5,4), symbol: "ENG", color: Color.AppColor.enter)],
+        
         [Key((5,4), symbol: "ENTER", columns: 2, color: Color.AppColor.enter),
          Key((5,4), symbol: "+/-", color: Color.AppColor.enter),
          Key((5,4), symbol: "EEX", color: Color.AppColor.enter)],
