@@ -17,7 +17,7 @@ enum SymbolType {
 
 enum KeyOperation {
     case none, delete, negate, exponent, add, subtract, multiply, divide, enter
-    case selectOctal, selectDecimal, selectHexadecimal, switchRadix
+    case selectOctal, selectDecimal, selectHexadecimal, switchRadix, size
     case sto, rcl, over, swap, pick, drop
     case sin, cos, tan, sqrt, YtoX, invertX
     case asin, acos, atan, Xsquared, tenToX, eToX, pi, log, ln, xRootY

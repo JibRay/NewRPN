@@ -15,11 +15,16 @@ enum ScienceKeys {
     case baseEngineering, logic
 }
 
+enum FormatKeys {
+    case decimal, integer
+}
+
 struct ContentView: View {
     @State var stack = Stack()
     @State var isShowingSettings = false
     @State var entryKeys: EntryKeys = .decimal
     @State var scienceKeys: ScienceKeys = .baseEngineering
+    @State var formatKeys: FormatKeys = .decimal
     
     var body: some View {
         NavigationView {
@@ -58,6 +63,12 @@ struct ContentView: View {
                         KeypadView(stack: $stack, keypad: LogicKeypad(stack: $stack))
                     }
                     KeypadView(stack: $stack, keypad: BaseStackKeypad(stack: $stack))
+                    switch formatKeys {
+                    case .decimal:
+                        KeypadView(stack: $stack, keypad: DecimalFormatKeypad(stack: $stack))
+                    case .integer:
+                        KeypadView(stack: $stack, keypad: IntegerFormatKeypad(stack: $stack))
+                    }
                     switch entryKeys {
                     case .decimal:
                         KeypadView(stack: $stack, keypad: DecimalKeypad(stack: $stack))
@@ -68,6 +79,17 @@ struct ContentView: View {
             }
             .toolbar {
                 Button(action: {
+                    stack.degrees.toggle()
+                }, label: {
+                    if stack.degrees {
+                        Text("Degrees")
+                            .foregroundColor(Color.white)
+                    } else {
+                        Text("Radians")
+                            .foregroundColor(Color.white)
+                    }
+                })
+                Button(action: {
                     isShowingSettings.toggle()
                 }, label: {
                     Image(systemName: "gear")
@@ -75,7 +97,7 @@ struct ContentView: View {
                 })
                 .sheet(isPresented: $isShowingSettings, onDismiss: didDismissSettings) {
                     SettingsView(stack: $stack, entryKeys:
-                                    $entryKeys, scienceKeys: $scienceKeys, isShowingSettings: $isShowingSettings)
+                                    $entryKeys, scienceKeys: $scienceKeys, formatKeys: $formatKeys, isShowingSettings: $isShowingSettings)
                 }
             }
         }

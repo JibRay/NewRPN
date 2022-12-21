@@ -11,6 +11,7 @@ struct SettingsView: View {
     @Binding var stack: Stack
     @Binding var entryKeys: EntryKeys
     @Binding var scienceKeys: ScienceKeys
+    @Binding var formatKeys: FormatKeys
     @Binding var isShowingSettings: Bool
     
     func decimalKeypadSymbol() -> String {
@@ -44,6 +45,7 @@ struct SettingsView: View {
                 Button(action: {
                     entryKeys = .decimal
                     scienceKeys = .baseEngineering
+                    formatKeys = .decimal
                     stack.radix = .decimal
                 }) {
                     Label("Decimal Kepad", systemImage: decimalKeypadSymbol())
@@ -54,6 +56,7 @@ struct SettingsView: View {
                 Button(action: {
                     entryKeys = .integer
                     scienceKeys = .logic
+                    formatKeys = .integer
                 }) {
                     Label("Integer Kepad", systemImage: integerKeypadSymbol())
                 }

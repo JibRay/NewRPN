@@ -70,6 +70,8 @@ struct Stack {
     }
     
     var radix: Radix = .decimal
+    var integerWordSize: Int = 16
+    var degrees: Bool = true
     
     var mantisaText: String = ""
     var exponentText: String = ""

@@ -19,19 +19,10 @@ struct IntegerKeypad: Keypad {
                         "-": KeyStroke(operation: .subtract),
                         "x": KeyStroke(operation: .multiply),
                         "divide": KeyStroke(operation: .divide),
-                        "ENTER": KeyStroke(operation: .enter),
-                        "o:": KeyStroke(operation: .selectOctal),
-                        "d:": KeyStroke(operation: .selectDecimal),
-                        "h:": KeyStroke(operation: .selectHexadecimal),
-                        "arrow.counterclockwise": KeyStroke(operation: .switchRadix)]
+                        "ENTER": KeyStroke(operation: .enter)]
 
     // Buttons displayed by this keypad.
     let key: [[Key]] = [
-        [Key((5,5), symbol: "o:", color: Color.AppColor.enter),
-         Key((5,5), symbol: "d:", color: Color.AppColor.enter),
-         Key((5,5), symbol: "h:", color: Color.AppColor.enter),
-         Key((5,5), icon: .systemSymbol, symbol: "arrow.counterclockwise", columns: 2, color: Color.AppColor.enter)],
-        
         [Key((5,5), symbol: "ENTER", columns: 2, color: Color.AppColor.enter),
          Key((5,5), symbol: "+/-", color: Color.AppColor.enter),
          Key((5,5), symbol: "DEL", columns: 2, color: Color.AppColor.enter)],
@@ -46,7 +37,7 @@ struct IntegerKeypad: Keypad {
          Key((5,5), symbol: "9", color: Color.AppColor.numbers),
          Key((5,5), symbol: "A", color: Color.AppColor.numbers),
          Key((5,5), symbol: "B", color: Color.AppColor.numbers),
-         Key((5,5), symbol: "h", color: Color.AppColor.operators)],
+         Key((5,5), symbol: "x", color: Color.AppColor.operators)],
 
         [Key((5,5), symbol: "4", color: Color.AppColor.numbers),
          Key((5,5), symbol: "5", color: Color.AppColor.numbers),
