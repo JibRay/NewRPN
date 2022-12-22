@@ -77,6 +77,19 @@ struct ContentView: View {
                     }
                 }
             }
+            .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global)
+                .onEnded {_ in
+                        if entryKeys == .decimal {
+                        entryKeys = .integer
+                        scienceKeys = .logic
+                        formatKeys = .integer
+                    } else {
+                        entryKeys = .decimal
+                        scienceKeys = .baseEngineering
+                        formatKeys = .decimal
+                        stack.radix = .decimal
+                    }
+                })
             .toolbar {
                 Button(action: {
                     stack.degrees.toggle()

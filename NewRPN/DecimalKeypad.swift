@@ -25,7 +25,7 @@ struct DecimalKeypad: Keypad {
     let key: [[Key]] = [
         [Key((5,4), symbol: "ENTER", columns: 2, color: Color.AppColor.enter),
          Key((5,4), symbol: "+/-", color: Color.AppColor.enter),
-         Key((5,4), symbol: "EEX", color: Color.AppColor.enter)],
+         Key((5,4), symbol: "DEL", color: Color.AppColor.enter)],
         
         [Key((5,4), symbol: "7", color: Color.AppColor.numbers),
          Key((5,4), symbol: "8", color: Color.AppColor.numbers),
@@ -44,7 +44,7 @@ struct DecimalKeypad: Keypad {
         
         [Key((5,4), symbol: "0", color: Color.AppColor.numbers),
          Key((5,4), symbol: ".", color: Color.AppColor.numbers),
-         Key((5,4), symbol: "DEL", color: Color.AppColor.enter),
+         Key((5,4), symbol: "EEX", color: Color.AppColor.enter),
          Key((5,4), symbol: "+", color: Color.AppColor.operators)]
     ]
 
