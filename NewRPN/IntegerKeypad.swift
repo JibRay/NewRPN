@@ -53,6 +53,7 @@ struct IntegerKeypad: Keypad {
     ]
     
     func parse(_ keySymbol: String) -> Bool {
+        stack.message = ""
         if stack.parse(keySymbol) {
             return true // If stack handled it, we're done.
         }

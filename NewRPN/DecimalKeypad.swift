@@ -49,6 +49,7 @@ struct DecimalKeypad: Keypad {
     ]
 
     func parse(_ keySymbol: String) -> Bool {
+        stack.message = ""
         stack.radix = .decimal
         if stack.parse(keySymbol) {
             return true
@@ -69,17 +70,14 @@ struct DecimalKeypad: Keypad {
             case .exponent:
                 stack.parsingMantisa = false
             case .add:
-                // First see if there is a valid value in the mantisa.
-                if let z = Double(stack.mantisaText) {
-                    if stack.stackDepth() >= 1 {
-                        let y = stack.pop()!.decimalValue + z
-                        stack.push(StackItem(decimalValue: y))
+                if let x: Double = stack.getEntryOrStackValue() {
+                    if let y = stack.pop()?.decimalValue {
+                        let z = (x + y)
+                        stack.push(StackItem(decimalValue: z))
+                    } else {
+                        stack.message = "Error: stack empty"
                     }
-                } else if stack.stackDepth() >= 2 {
-                    let x = stack.pop()!.decimalValue
-                    stack.stackItems[0].decimalValue += x
                 }
-                stack.clearMantisa()
             case .subtract:
                 // First see if there is a valid value in the mantisa.
                 if let z = Double(stack.mantisaText) {
@@ -117,15 +115,12 @@ struct DecimalKeypad: Keypad {
                 }
                 stack.clearMantisa()
             case .enter:
-                var text = stack.negateMantisa ? "-" : ""
-                text += stack.mantisaText
-                if stack.exponentText.count > 0 {
-                    text += "e"
-                    text += stack.negateExponent ? "-" : ""
-                    text += stack.exponentText
-                }
-                if let v = Double(text) {
-                    stack.push(StackItem(decimalValue: v))
+                if let v = stack.getEntryValue() {
+                    if v.isFinite {
+                        stack.push(StackItem(decimalValue: v))
+                    } else {
+                        stack.message = "Invalid number"
+                    }
                 } else {
                     stack.push(stack.stackItems[0])
                 }

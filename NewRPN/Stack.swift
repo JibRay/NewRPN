@@ -20,7 +20,13 @@ struct StackItem {
         get { return _decimalValue }
         set {
             _decimalValue = newValue
-            _integerValue = Int64(newValue)
+            if _decimalValue >= Double(Int64.max) {
+                _integerValue = Int64.max
+            } else if _decimalValue <= Double(-Int64.max) {
+                _integerValue = -Int64.max
+            } else {
+                _integerValue = Int64(decimalValue)
+            }
         }
     }
     var _integerValue: Int64 = 0
@@ -38,13 +44,11 @@ struct StackItem {
     }
     init(decimalValue: Double) {
         self.empty = false
-        self._decimalValue = decimalValue
-        self._integerValue = Int64(decimalValue)
+        self.decimalValue = decimalValue
     }
     init(integerValue: Int64) {
         self.empty = false
-        self._integerValue = integerValue
-        self._decimalValue = Double(integerValue)
+        self.integerValue = integerValue
     }
 }
 
@@ -52,6 +56,7 @@ struct Stack {
     let stackSize = 4
     // Top of the stack is [0] and bottom is [4].
     var stackItems = [StackItem](repeating: StackItem(), count: 4)
+    var message: String = ""
     var entryValuePrefix: String = ""
     var entryValueText: String {
         get {
@@ -94,21 +99,29 @@ struct Stack {
                         "PICK": KeyStroke(operation: .pick),
                         "DROP": KeyStroke(operation: .drop)]
 
-    mutating func getEntryOrStackValue() -> Double? {
-        var value: Double? = 0.0
-        var text = negateMantisa ? "-" : ""
-        text += mantisaText
-        if exponentText.count > 0 {
-            text += "e"
-            text += negateExponent ? "-" : ""
-            text += exponentText
+    mutating func getEntryValue() -> Double? {
+        var value: Double? = nil
+        var text = ""
+        if mantisaText.count > 0 {
+            text = { negateMantisa ? "-" : "" }() + mantisaText
+            if exponentText.count > 0 {
+                text += "e" + { negateExponent ? "-" : "" }() + exponentText
+            }
+            if let v = Double(text) {
+                value = v
+            }
+            clearMantisa()
         }
-        if let v = Double(text) {
+        return value
+    }
+    
+    mutating func getEntryOrStackValue() -> Double? {
+        var value: Double? = nil
+        if let v = getEntryValue() {
             value = v
         } else {
             value = pop()!.decimalValue
         }
-        clearMantisa()
         return value
     }
     
@@ -130,6 +143,7 @@ struct Stack {
         return formatter
     }
     
+    // FIXME: Should this be in the StackItem struct?
     func stackItemText(_ index: Int) -> String {
         var text = ""
         if stackItems[index].empty {
@@ -137,6 +151,7 @@ struct Stack {
         } else { // FIXME: Values do not display correctly in all cases.
             switch radix {
                 case .decimal:
+                // debug: print("stackItem: \(index): \(stackItems[index].decimalValue) \(stackItems[index].integerValue)")
                     if ((stackItems[index].decimalValue < 0.00000001 && stackItems[index].decimalValue > 0.0)
                         || (stackItems[index].decimalValue > 999999999.999999)
                         || (stackItems[index].decimalValue < -999999999.999999)
@@ -190,12 +205,15 @@ struct Stack {
     }
     
     mutating func pop() -> StackItem? {
-        let top = stackItems[0]
-        for index in 1..<stackSize {
-            stackItems[index - 1] = stackItems[index]
+        if stackDepth() > 0 {
+            let top = stackItems[0]
+            for index in 1..<stackSize {
+                stackItems[index - 1] = stackItems[index]
+            }
+            stackItems[stackSize - 1].empty = true
+            return top
         }
-        stackItems[stackSize - 1].empty = true
-        return top
+        return nil
     }
     
     mutating func over() {
@@ -234,6 +252,7 @@ struct Stack {
     // If keySymbol is a valid number in the current radix,
     // process it and return true. Otherwise return false.
     mutating func parse(_ keySymbol: String) -> Bool {
+        message = ""
         switch radix {
         case .octal:
             if (validOctalNumbers.contains(keySymbol)) {

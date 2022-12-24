@@ -91,23 +91,28 @@ struct ContentView: View {
                     }
                 })
             .toolbar {
-                Button(action: {
-                    stack.degrees.toggle()
-                }, label: {
-                    if stack.degrees {
-                        Text("Degrees")
+                HStack() {
+                    Text(stack.message)
+                        .foregroundColor(Color.pink)
+                    Spacer()
+                    Button(action: {
+                        stack.degrees.toggle()
+                    }, label: {
+                        if stack.degrees {
+                            Text("Degrees")
+                                .foregroundColor(Color.white)
+                        } else {
+                            Text("Radians")
+                                .foregroundColor(Color.white)
+                        }
+                    })
+                    Button(action: {
+                        isShowingSettings.toggle()
+                    }, label: {
+                        Image(systemName: "gear")
                             .foregroundColor(Color.white)
-                    } else {
-                        Text("Radians")
-                            .foregroundColor(Color.white)
-                    }
-                })
-                Button(action: {
-                    isShowingSettings.toggle()
-                }, label: {
-                    Image(systemName: "gear")
-                        .foregroundColor(Color.white)
-                })
+                    })
+                }
                 .sheet(isPresented: $isShowingSettings, onDismiss: didDismissSettings) {
                     SettingsView(stack: $stack, entryKeys:
                                     $entryKeys, scienceKeys: $scienceKeys, formatKeys: $formatKeys, isShowingSettings: $isShowingSettings)

@@ -47,6 +47,7 @@ struct SettingsView: View {
                     scienceKeys = .baseEngineering
                     formatKeys = .decimal
                     stack.radix = .decimal
+                    stack.entryValuePrefix = ""
                 }) {
                     Label("Decimal Kepad", systemImage: decimalKeypadSymbol())
                 }
