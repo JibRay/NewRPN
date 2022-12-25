@@ -15,6 +15,7 @@ enum Radix: Int {
 
 struct StackItem {
     var empty: Bool = true
+    var displayAsHMS: Bool = false
     var _decimalValue: Double = 0.0
     var decimalValue: Double {
         get { return _decimalValue }
@@ -143,16 +144,27 @@ struct Stack {
         return formatter
     }
     
+    func toHMS(_ t: Double) -> (Int, Int, Double) {
+        var seconds = t
+        let hours = Int(seconds / 3600.0)
+        seconds -= Double(3600 * hours)
+        let minutes = Int(seconds / 60.0)
+        seconds -= Double(60 * minutes)
+        return (hours, minutes, seconds)
+    }
+    
     // FIXME: Should this be in the StackItem struct?
     func stackItemText(_ index: Int) -> String {
         var text = ""
         if stackItems[index].empty {
             return ""
-        } else { // FIXME: Values do not display correctly in all cases.
+        } else {
             switch radix {
                 case .decimal:
-                // debug: print("stackItem: \(index): \(stackItems[index].decimalValue) \(stackItems[index].integerValue)")
-                    if ((stackItems[index].decimalValue < 0.00000001 && stackItems[index].decimalValue > 0.0)
+                if stackItems[index].displayAsHMS {
+                    let hms = toHMS(stackItems[index].decimalValue)
+                    text = String(format: "%0d:%02d:%0.8f", hms.0, hms.1, hms.2)
+                } else if ((stackItems[index].decimalValue < 0.00000001 && stackItems[index].decimalValue > 0.0)
                         || (stackItems[index].decimalValue > 999999999.999999)
                         || (stackItems[index].decimalValue < -999999999.999999)
                         || (stackItems[index].decimalValue > -0.00000001) && stackItems[index].decimalValue < 0.0) {

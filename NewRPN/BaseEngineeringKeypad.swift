@@ -12,12 +12,12 @@ struct BaseEngineeringKeypad: Keypad {
     let fontSize: CGFloat = 18
     
     // This keypad's operations.
-    let operationMap = ["->H:M:S": KeyStroke(operation: .none),
-                        "SINH": KeyStroke(operation: .none),
-                        "COSH": KeyStroke(operation: .none),
-                        "TANH": KeyStroke(operation: .none),
+    let operationMap = ["->H:M:S": KeyStroke(operation: .toHMS),
+                        "SINH": KeyStroke(operation: .sinh),
+                        "COSH": KeyStroke(operation: .cosh),
+                        "TANH": KeyStroke(operation: .tanh),
                         " ": KeyStroke(operation: .none),
-                        "H:W:M>": KeyStroke(operation: .none),
+                        "H:M:S->": KeyStroke(operation: .fromHMS),
                         "\u{03C0}": KeyStroke(operation: .pi),
                         "x.root.y": KeyStroke(operation: .xRootY),
                         "LOG": KeyStroke(operation: .log),
@@ -70,6 +70,14 @@ struct BaseEngineeringKeypad: Keypad {
         }
         if let operationToken = operationMap[keySymbol] {
             switch operationToken.operation {
+            case .toHMS:
+                if stack.stackDepth() > 0 {
+                    stack.stackItems[0].displayAsHMS = true
+                }
+            case .fromHMS:
+                if stack.stackDepth() > 0 {
+                    stack.stackItems[0].displayAsHMS = false
+                }
             case .sin:
                 if let x: Double = stack.getEntryOrStackValue() {
                     stack.push(StackItem(decimalValue: sin(x)))
