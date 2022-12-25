@@ -120,7 +120,7 @@ struct Stack {
         if let v = getEntryValue() {
             value = v
         } else {
-            value = pop()!.decimalValue
+            value = pop()?.decimalValue
         }
         return value
     }

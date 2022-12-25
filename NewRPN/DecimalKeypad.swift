@@ -72,48 +72,55 @@ struct DecimalKeypad: Keypad {
             case .add:
                 if let x: Double = stack.getEntryOrStackValue() {
                     if let y = stack.pop()?.decimalValue {
-                        let z = (x + y)
-                        stack.push(StackItem(decimalValue: z))
+                        let z = x + y
+                        if z.isFinite {
+                            stack.push(StackItem(decimalValue: z))
+                        } else {
+                            stack.message = "Invalid result"
+                        }
                     } else {
                         stack.message = "Error: stack empty"
                     }
                 }
             case .subtract:
-                // First see if there is a valid value in the mantisa.
-                if let z = Double(stack.mantisaText) {
-                    if stack.stackDepth() >= 1 {
-                        let y = stack.pop()!.decimalValue - z
-                        stack.push(StackItem(decimalValue: y))
+                if let x: Double = stack.getEntryOrStackValue() {
+                    if let y = stack.pop()?.decimalValue {
+                        let z = y - x
+                        if z.isFinite {
+                            stack.push(StackItem(decimalValue: z))
+                        } else {
+                            stack.message = "Invalid result"
+                        }
+                    } else {
+                        stack.message = "Error: stack empty"
                     }
-                } else if stack.stackDepth() >= 2 {
-                    let x = stack.pop()!.decimalValue
-                    stack.stackItems[0].decimalValue -= x
                 }
-                stack.clearMantisa()
             case .multiply:
-                // First see if there is a valid value in the mantisa.
-                if let z = Double(stack.mantisaText) {
-                    if stack.stackDepth() >= 1 {
-                        let y = stack.pop()!.decimalValue * z
-                        stack.push(StackItem(decimalValue: y))
+                if let x: Double = stack.getEntryOrStackValue() {
+                    if let y = stack.pop()?.decimalValue {
+                        let z = x * y
+                        if z.isFinite {
+                            stack.push(StackItem(decimalValue: z))
+                        } else {
+                            stack.message = "Invalid result"
+                        }
+                    } else {
+                        stack.message = "Error: stack empty"
                     }
-                } else if stack.stackDepth() >= 2 {
-                    let x = stack.pop()!.decimalValue
-                    stack.stackItems[0].decimalValue *= x
                 }
-                stack.clearMantisa()
             case .divide:
-                // First see if there is a valid value in the mantisa.
-                if let z = Double(stack.mantisaText) {
-                    if stack.stackDepth() >= 1 {
-                        let y = stack.pop()!.decimalValue / z
-                        stack.push(StackItem(decimalValue: y))
+                if let x: Double = stack.getEntryOrStackValue() {
+                    if let y = stack.pop()?.decimalValue {
+                        let z = y / x
+                        if z.isFinite {
+                            stack.push(StackItem(decimalValue: z))
+                        } else {
+                            stack.message = "Invalid result"
+                        }
+                    } else {
+                        stack.message = "Error: stack empty"
                     }
-                } else if stack.stackDepth() >= 2 {
-                    let x = stack.pop()!.decimalValue
-                    stack.stackItems[0].decimalValue /= x
                 }
-                stack.clearMantisa()
             case .enter:
                 if let v = stack.getEntryValue() {
                     if v.isFinite {
