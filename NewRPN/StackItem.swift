@@ -64,55 +64,55 @@ struct StackItem {
     }
 
     func text(format: ValueFormat) -> String {
-        switch format.format {
-        case .standard:
-            return standardText(format: format)
-        case .fixed:
-            return fixedText(format: format)
-        case .science, .engineering:
-            return scienceText(format: format)
+        if empty {
+            return ""
+        } else if format.displayAsHMS {
+            let hms = toHMS(decimalValue)
+            let formatString: String = "%0d:%02d:%0.\(format.decimalPlaces)f"
+            return String(format: formatString, hms.0, hms.1, hms.2)
+        } else {
+            switch format.format {
+            case .standard:
+                return standardText(format: format)
+            case .fixed:
+                return fixedText(format: format)
+            case .science, .engineering:
+                return scienceText(format: format)
+            }
         }
     }
     
     func standardText(format: ValueFormat) -> String {
         var text = ""
-        if empty {
-            return ""
-        } else {
-            switch format.radix {
-                case .decimal:
-                if format.displayAsHMS {
-                    let hms = toHMS(decimalValue)
-                    text = String(format: "%0d:%02d:%0.8f", hms.0, hms.1, hms.2)
-                } else if ((decimalValue < 0.00000001 && decimalValue > 0.0)
-                        || (decimalValue > 999999999.999999)
-                        || (decimalValue < -999999999.999999)
-                        || (decimalValue > -0.00000001) && decimalValue < 0.0) {
-                        let formatter = NumberFormatter()
-                        formatter.numberStyle = .scientific
-                        formatter.positiveFormat = "0.########E+0"
-                        formatter.exponentSymbol = "e"
-                        if let etext = formatter.string(for: decimalValue) {
-                            text = etext
-                        } else {
-                            text = ""
-                        }
-                    } else {
-                        text = String(format: "%0.8f", decimalValue)
-                    }
-                case .octal:
-                    text = String(format: "o:%O", integerValue)
-                case .hexidecimal:
-                    text = String(format: "h:%X", integerValue)
+
+        switch format.radix {
+        case .decimal:
+            if ((decimalValue < 0.00000001 && decimalValue > 0.0)
+                || (decimalValue > 999999999.999999)
+                || (decimalValue < -999999999.999999)
+                || (decimalValue > -0.00000001) && decimalValue < 0.0) {
+                let formatter = NumberFormatter()
+                formatter.numberStyle = .scientific
+                formatter.positiveFormat = "0.########E+0"
+                formatter.exponentSymbol = "e"
+                if let etext = formatter.string(for: decimalValue) {
+                    text = etext
+                } else {
+                    text = ""
                 }
+            } else {
+                text = String(format: "%0.8f", decimalValue)
             }
+        case .octal:
+            text = String(format: "o:%O", integerValue)
+        case .hexidecimal:
+            text = String(format: "h:%X", integerValue)
+        }
+
         return text
     }
     
     func fixedText(format: ValueFormat) -> String {
-        if empty {
-            return ""
-        }
         let formatString: String = "%0.\(format.decimalPlaces)f"
         return String(format: formatString, decimalValue)
     }
