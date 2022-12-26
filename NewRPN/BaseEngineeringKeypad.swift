@@ -72,11 +72,11 @@ struct BaseEngineeringKeypad: Keypad {
             switch operationToken.operation {
             case .toHMS:
                 if stack.stackDepth() > 0 {
-                    stack.stackItems[0].displayAsHMS = true
+                    stack.valueFormat.displayAsHMS = true
                 }
             case .fromHMS:
                 if stack.stackDepth() > 0 {
-                    stack.stackItems[0].displayAsHMS = false
+                    stack.valueFormat.displayAsHMS = false
                 }
             case .sin:
                 if let x: Double = stack.getEntryOrStackValue() {

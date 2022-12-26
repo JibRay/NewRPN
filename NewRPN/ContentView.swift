@@ -37,7 +37,7 @@ struct ContentView: View {
                     ForEach(0..<4) { i in
                         HStack {
                             Spacer()
-                            Text("\(stack.stackItemText(3 - i))")
+                            Text("\(stack.stackItems[3 - i].text(format: stack.valueFormat))")
                                 //.bold()
                                 .font(.system(size: 25))
                                 .monospaced()
@@ -87,7 +87,7 @@ struct ContentView: View {
                         entryKeys = .decimal
                         scienceKeys = .baseEngineering
                         formatKeys = .decimal
-                        stack.radix = .decimal
+                        stack.valueFormat.format = .standard
                     }
                 })
             .toolbar {

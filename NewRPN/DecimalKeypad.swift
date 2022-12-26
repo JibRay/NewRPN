@@ -50,7 +50,7 @@ struct DecimalKeypad: Keypad {
 
     func parse(_ keySymbol: String) -> Bool {
         stack.message = ""
-        stack.radix = .decimal
+        stack.valueFormat.radix = .decimal
         if stack.parse(keySymbol) {
             return true
         }

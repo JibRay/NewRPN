@@ -7,55 +7,9 @@
 
 import SwiftUI
 
-enum Radix: Int {
-    case octal = 8
-    case decimal = 10
-    case hexidecimal = 16
-}
-
-struct StackItem {
-    var empty: Bool = true
-    var displayAsHMS: Bool = false
-    var _decimalValue: Double = 0.0
-    var decimalValue: Double {
-        get { return _decimalValue }
-        set {
-            _decimalValue = newValue
-            if _decimalValue >= Double(Int64.max) {
-                _integerValue = Int64.max
-            } else if _decimalValue <= Double(-Int64.max) {
-                _integerValue = -Int64.max
-            } else {
-                _integerValue = Int64(decimalValue)
-            }
-        }
-    }
-    var _integerValue: Int64 = 0
-    var integerValue: Int64 {
-        get { return _integerValue }
-        set {
-            _integerValue = newValue
-            _decimalValue = Double(newValue)
-        }
-    }
-    init() {
-        empty = true
-        _decimalValue = 0.0
-        _integerValue = 0
-    }
-    init(decimalValue: Double) {
-        self.empty = false
-        self.decimalValue = decimalValue
-    }
-    init(integerValue: Int64) {
-        self.empty = false
-        self.integerValue = integerValue
-    }
-}
-
 struct Stack {
     let stackSize = 4
-    // Top of the stack is [0] and bottom is [4].
+    // Top of the stack is [0] and bottom is [stackSize - 1].
     var stackItems = [StackItem](repeating: StackItem(), count: 4)
     var message: String = ""
     var entryValuePrefix: String = ""
@@ -75,8 +29,7 @@ struct Stack {
         }
     }
     
-    var radix: Radix = .decimal
-    var integerWordSize: Int = 16
+    var valueFormat: ValueFormat = ValueFormat()
     var degrees: Bool = true
     
     var mantisaText: String = ""
@@ -133,60 +86,6 @@ struct Stack {
         } else {
             return number
         }
-    }
-    
-    // FIXME: using this fails to compile.
-    func scienticFormatter() -> NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .scientific
-        formatter.positiveFormat = "0.######E+0"
-        formatter.exponentSymbol = "e"
-        return formatter
-    }
-    
-    func toHMS(_ t: Double) -> (Int, Int, Double) {
-        var seconds = t
-        let hours = Int(seconds / 3600.0)
-        seconds -= Double(3600 * hours)
-        let minutes = Int(seconds / 60.0)
-        seconds -= Double(60 * minutes)
-        return (hours, minutes, seconds)
-    }
-    
-    // FIXME: Should this be in the StackItem struct?
-    func stackItemText(_ index: Int) -> String {
-        var text = ""
-        if stackItems[index].empty {
-            return ""
-        } else {
-            switch radix {
-                case .decimal:
-                if stackItems[index].displayAsHMS {
-                    let hms = toHMS(stackItems[index].decimalValue)
-                    text = String(format: "%0d:%02d:%0.8f", hms.0, hms.1, hms.2)
-                } else if ((stackItems[index].decimalValue < 0.00000001 && stackItems[index].decimalValue > 0.0)
-                        || (stackItems[index].decimalValue > 999999999.999999)
-                        || (stackItems[index].decimalValue < -999999999.999999)
-                        || (stackItems[index].decimalValue > -0.00000001) && stackItems[index].decimalValue < 0.0) {
-                        let formatter = NumberFormatter()
-                        formatter.numberStyle = .scientific
-                        formatter.positiveFormat = "0.########E+0"
-                        formatter.exponentSymbol = "e"
-                        if let etext = formatter.string(for: stackItems[index].decimalValue) {
-                            text = etext
-                        } else {
-                            text = ""
-                        }
-                    } else {
-                        text = String(format: "%0.8f", stackItems[index].decimalValue)
-                    }
-                case .octal:
-                    text = String(format: "o:%O", stackItems[index].integerValue)
-                case .hexidecimal:
-                    text = String(format: "h:%X", stackItems[index].integerValue)
-                }
-            }
-        return text
     }
     
     mutating func clearMantisa() {
@@ -252,20 +151,11 @@ struct Stack {
         _ = pop()
     }
     
-    /* FIXME: Is this needed?
-    mutating func pick(index: Int) {
-        if index < stackSize && !stackItems[index].empty {
-            let item = stackItems[index]
-            push(item)
-        }
-    }
-     */
-    
     // If keySymbol is a valid number in the current radix,
     // process it and return true. Otherwise return false.
     mutating func parse(_ keySymbol: String) -> Bool {
         message = ""
-        switch radix {
+        switch valueFormat.radix {
         case .octal:
             if (validOctalNumbers.contains(keySymbol)) {
                 if mantisaText.count < 15 {

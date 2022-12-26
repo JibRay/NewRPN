@@ -60,25 +60,25 @@ struct IntegerKeypad: Keypad {
         if let operationToken = operationMap[keySymbol] {
             switch operationToken.operation {
             case .selectOctal:
-                stack.radix = .octal
+                stack.valueFormat.radix = .octal
                 stack.entryValuePrefix = "o:"
             case .selectDecimal:
-                stack.radix = .decimal
+                stack.valueFormat.radix = .decimal
                 stack.entryValuePrefix = ""
             case .selectHexadecimal:
-                stack.radix = .hexidecimal
+                stack.valueFormat.radix = .hexidecimal
                 stack.entryValuePrefix = "h:"
             case .switchRadix:
-                switch stack.radix {
+                switch stack.valueFormat.radix {
                 case .octal:
                     stack.clearMantisa()
-                    stack.radix = .decimal
+                    stack.valueFormat.radix = .decimal
                 case .decimal:
                     stack.clearMantisa()
-                    stack.radix = .hexidecimal
+                    stack.valueFormat.radix = .hexidecimal
                 case .hexidecimal:
                     stack.clearMantisa()
-                    stack.radix = .octal
+                    stack.valueFormat.radix = .octal
                 }
             case .negate:
                 stack.negateMantisa = !stack.negateMantisa
@@ -89,7 +89,7 @@ struct IntegerKeypad: Keypad {
                 stack.clearMantisa()
             case .add:
                 // First see if there is a valid value in the mantisa.
-                if let x = Int64(stack.mantisaText, radix: stack.radix.rawValue) {
+                if let x = Int64(stack.mantisaText, radix: stack.valueFormat.radix.rawValue) {
                     if stack.stackDepth() >= 1 {
                         let y = stack.pop()!.integerValue + x
                         stack.push(StackItem(integerValue: y))
@@ -101,7 +101,7 @@ struct IntegerKeypad: Keypad {
                 stack.clearMantisa()
             case .subtract:
                 // First see if there is a valid value in the mantisa.
-                if let x = Int64(stack.mantisaText, radix: stack.radix.rawValue) {
+                if let x = Int64(stack.mantisaText, radix: stack.valueFormat.radix.rawValue) {
                     if stack.stackDepth() >= 1 {
                         let y = stack.pop()!.integerValue - x
                         stack.push(StackItem(integerValue: y))
@@ -113,7 +113,7 @@ struct IntegerKeypad: Keypad {
                 stack.clearMantisa()
             case .multiply:
                 // First see if there is a valid value in the mantisa.
-                if let z = Int64(stack.mantisaText, radix: stack.radix.rawValue) {
+                if let z = Int64(stack.mantisaText, radix: stack.valueFormat.radix.rawValue) {
                     if stack.stackDepth() >= 1 {
                         let y = stack.pop()!.integerValue * z
                         stack.push(StackItem(integerValue: y))
@@ -125,7 +125,7 @@ struct IntegerKeypad: Keypad {
                 stack.clearMantisa()
             case .divide:
                 // First see if there is a valid value in the mantisa.
-                if let z = Int64(stack.mantisaText, radix: stack.radix.rawValue) {
+                if let z = Int64(stack.mantisaText, radix: stack.valueFormat.radix.rawValue) {
                     if stack.stackDepth() >= 1 {
                         let y = stack.pop()!.integerValue / z
                         stack.push(StackItem(integerValue: y))
@@ -138,7 +138,7 @@ struct IntegerKeypad: Keypad {
             case .enter:
                 var text = stack.negateMantisa ? "-" : ""
                 text += stack.mantisaText
-                if let v = Int64(text, radix: stack.radix.rawValue) {
+                if let v = Int64(text, radix: stack.valueFormat.radix.rawValue) {
                     stack.push(StackItem(integerValue: v))
                 } else {
                     stack.push(stack.stackItems[0])

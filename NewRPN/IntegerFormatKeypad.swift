@@ -34,30 +34,30 @@ struct IntegerFormatKeypad: Keypad  {
         if let operationToken = operationMap[keySymbol] {
             switch operationToken.operation {
             case .selectOctal:
-                stack.radix = .octal
+                stack.valueFormat.radix = .octal
                 stack.entryValuePrefix = "o:"
             case .selectDecimal:
-                stack.radix = .decimal
+                stack.valueFormat.radix = .decimal
                 stack.entryValuePrefix = ""
             case .selectHexadecimal:
-                stack.radix = .hexidecimal
+                stack.valueFormat.radix = .hexidecimal
                 stack.entryValuePrefix = "h:"
             case .switchRadix:
-                switch stack.radix {
+                switch stack.valueFormat.radix {
                 case .octal:
                     stack.clearMantisa()
-                    stack.radix = .decimal
+                    stack.valueFormat.radix = .decimal
                 case .decimal:
                     stack.clearMantisa()
-                    stack.radix = .hexidecimal
+                    stack.valueFormat.radix = .hexidecimal
                 case .hexidecimal:
                     stack.clearMantisa()
-                    stack.radix = .octal
+                    stack.valueFormat.radix = .octal
                 }
             case .size:
                 if let w = Int(stack.mantisaText) {
                     if w > 1 && w <= 32 {
-                        stack.integerWordSize = w
+                        stack.valueFormat.integerWordSize = w
                     }
                 }
                 stack.clearMantisa()

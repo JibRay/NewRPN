@@ -20,6 +20,7 @@
 		0CCD6D42293FAFA20087B453 /* BaseStackKeypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD6D41293FAFA20087B453 /* BaseStackKeypad.swift */; };
 		0CCD6D4429422CE70087B453 /* IntegerKeypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD6D4329422CE70087B453 /* IntegerKeypad.swift */; };
 		0CCD6D4629461EFE0087B453 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD6D4529461EFE0087B453 /* Style.swift */; };
+		0CD56F522959E2AA00A587E3 /* StackItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD56F512959E2AA00A587E3 /* StackItem.swift */; };
 		0CF4B430295122D700D6F4C5 /* IntegerFormatKeypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF4B42F295122D700D6F4C5 /* IntegerFormatKeypad.swift */; };
 		0CF4B43229512A9D00D6F4C5 /* DecimalFormatKeypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF4B43129512A9D00D6F4C5 /* DecimalFormatKeypad.swift */; };
 /* End PBXBuildFile section */
@@ -39,6 +40,7 @@
 		0CCD6D41293FAFA20087B453 /* BaseStackKeypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStackKeypad.swift; sourceTree = "<group>"; };
 		0CCD6D4329422CE70087B453 /* IntegerKeypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegerKeypad.swift; sourceTree = "<group>"; };
 		0CCD6D4529461EFE0087B453 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
+		0CD56F512959E2AA00A587E3 /* StackItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackItem.swift; sourceTree = "<group>"; };
 		0CF4B42F295122D700D6F4C5 /* IntegerFormatKeypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegerFormatKeypad.swift; sourceTree = "<group>"; };
 		0CF4B43129512A9D00D6F4C5 /* DecimalFormatKeypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalFormatKeypad.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,6 +90,7 @@
 				0CBA44CA294BA6BA000744A4 /* Settings.swift */,
 				0CF4B42F295122D700D6F4C5 /* IntegerFormatKeypad.swift */,
 				0CF4B43129512A9D00D6F4C5 /* DecimalFormatKeypad.swift */,
+				0CD56F512959E2AA00A587E3 /* StackItem.swift */,
 			);
 			path = NewRPN;
 			sourceTree = "<group>";
@@ -183,6 +186,7 @@
 				0CCD6D4629461EFE0087B453 /* Style.swift in Sources */,
 				0CBA44CB294BA6BA000744A4 /* Settings.swift in Sources */,
 				0CCD6D42293FAFA20087B453 /* BaseStackKeypad.swift in Sources */,
+				0CD56F522959E2AA00A587E3 /* StackItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
