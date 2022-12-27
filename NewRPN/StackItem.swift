@@ -63,6 +63,7 @@ struct StackItem {
         self.integerValue = integerValue
     }
 
+    // FIXME: Return nil of there was an error?
     func text(format: ValueFormat) -> String {
         if empty {
             return ""
@@ -76,12 +77,15 @@ struct StackItem {
                 return standardText(format: format)
             case .fixed:
                 return fixedText(format: format)
-            case .science, .engineering:
+            case .science:
                 return scienceText(format: format)
+            case .engineering:
+                return engineeringText(format: format)
             }
         }
     }
     
+    // FIXME: change this formatting to use same logic as engineering.
     func standardText(format: ValueFormat) -> String {
         var text = ""
 
@@ -118,7 +122,47 @@ struct StackItem {
     }
     
     func scienceText(format: ValueFormat) -> String {
-        return ""
+        var formatString = "0."
+        for _ in (0..<format.decimalPlaces) {
+            formatString += "#"
+        }
+        formatString += "E+0"
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .scientific
+        formatter.positiveFormat = formatString
+        formatter.exponentSymbol = "e"
+        if let text = formatter.string(for: decimalValue) {
+            return text
+        } else {
+            return ""
+        }
+    }
+    
+    func engineeringText(format: ValueFormat) -> String {
+        var x = decimalValue
+        var negative = false
+        if decimalValue < 0.0 {
+            x = -decimalValue
+            negative = true
+        }
+        var outputExponent: Int
+        var text = ""
+        var formatString: String = negative ? "-" : ""
+        formatString += "%0.\(format.decimalPlaces)f"
+        if log10(x) < 0 {
+            outputExponent = 3 + Int(-log10(x) / 3.0) * 3
+            text = String(format: formatString, x * pow(10.0, Double(outputExponent)))
+            if outputExponent != 0 {
+                text += "-e\(outputExponent)"
+            }
+        } else {
+            outputExponent = Int(log10(x) / 3.0) * 3
+            text = String(format: formatString, x / pow(10.0, Double(outputExponent)))
+            if outputExponent != 0 {
+                text += "e\(outputExponent)"
+            }
+        }
+        return text
     }
     
     func toHMS(_ t: Double) -> (Int, Int, Double) {
