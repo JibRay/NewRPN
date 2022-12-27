@@ -153,7 +153,7 @@ struct StackItem {
             outputExponent = 3 + Int(-log10(x) / 3.0) * 3
             text = String(format: formatString, x * pow(10.0, Double(outputExponent)))
             if outputExponent != 0 {
-                text += "-e\(outputExponent)"
+                text += "e-\(outputExponent)"
             }
         } else {
             outputExponent = Int(log10(x) / 3.0) * 3
