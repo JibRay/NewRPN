@@ -13,11 +13,13 @@ import SwiftUI
 // 2. Post message when format changes.
 // 3. Finish H:M:S.
 // 4. Implement STO and RCL.
+// 5. Keep working on error checking.
 @main
 struct NewRPNApp: App {
+    let version: Int = 2
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(version: self.version)
         }
     }
 }

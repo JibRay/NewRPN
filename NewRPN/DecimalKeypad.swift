@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// Contains number keys, basic math keys and entry control keys. Operations
+// are all floating point. This keypad can be swapped with other keypads.
 struct DecimalKeypad: Keypad {
     @Binding var stack: Stack
     let fontSize: CGFloat = 25
@@ -49,7 +51,7 @@ struct DecimalKeypad: Keypad {
     ]
 
     func parse(_ keySymbol: String) -> Bool {
-        stack.message = ""
+        stack.postMessage("")
         stack.valueFormat.radix = .decimal
         if stack.parse(keySymbol) {
             return true
@@ -76,10 +78,10 @@ struct DecimalKeypad: Keypad {
                         if z.isFinite {
                             stack.push(StackItem(decimalValue: z))
                         } else {
-                            stack.message = "Invalid result"
+                            stack.postError("Invalid result")
                         }
                     } else {
-                        stack.message = "Error: stack empty"
+                        stack.postError("Error: stack empty")
                     }
                 }
             case .subtract:
@@ -89,10 +91,10 @@ struct DecimalKeypad: Keypad {
                         if z.isFinite {
                             stack.push(StackItem(decimalValue: z))
                         } else {
-                            stack.message = "Invalid result"
+                            stack.postError("Invalid result")
                         }
                     } else {
-                        stack.message = "Error: stack empty"
+                        stack.postError("Error: stack empty")
                     }
                 }
             case .multiply:
@@ -102,10 +104,10 @@ struct DecimalKeypad: Keypad {
                         if z.isFinite {
                             stack.push(StackItem(decimalValue: z))
                         } else {
-                            stack.message = "Invalid result"
+                            stack.postError("Invalid result")
                         }
                     } else {
-                        stack.message = "Error: stack empty"
+                        stack.postError("Error: stack empty")
                     }
                 }
             case .divide:
@@ -115,10 +117,10 @@ struct DecimalKeypad: Keypad {
                         if z.isFinite {
                             stack.push(StackItem(decimalValue: z))
                         } else {
-                            stack.message = "Invalid result"
+                            stack.postError("Invalid result")
                         }
                     } else {
-                        stack.message = "Error: stack empty"
+                        stack.postError("Error: stack empty")
                     }
                 }
             case .enter:
@@ -126,7 +128,7 @@ struct DecimalKeypad: Keypad {
                     if v.isFinite {
                         stack.push(StackItem(decimalValue: v))
                     } else {
-                        stack.message = "Invalid number"
+                        stack.postError("Invalid number")
                     }
                 } else {
                     stack.push(stack.stackItems[0])

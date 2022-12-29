@@ -13,8 +13,11 @@ enum Radix: Int {
     case hexidecimal = 16
 }
 
-enum Format: Int {
-    case standard, fixed, science, engineering
+enum Format: String {
+    case standard = "STD"
+    case fixed = "FIX"
+    case science = "SCI"
+    case engineering = "ENG"
 }
 
 struct ValueFormat {
@@ -25,6 +28,10 @@ struct ValueFormat {
     var integerWordSize: Int = 16
 }
 
+// Stack items contain a stack value. It contains two internal values:
+// decimalValue and integerValue. These are kept in sync as much as
+// possible. text() returns a formatted representation of either
+// decimalValue or integerValue depending on format selections.
 struct StackItem {
     var empty: Bool = true
     var _decimalValue: Double = 0.0
@@ -63,7 +70,8 @@ struct StackItem {
         self.integerValue = integerValue
     }
 
-    // FIXME: Return nil of there was an error?
+    // Format either decimalValue or integerValue depending on the value
+    // of the format argument.
     func text(format: ValueFormat) -> String {
         if empty {
             return ""
@@ -86,6 +94,7 @@ struct StackItem {
     }
     
     // FIXME: change this formatting to use same logic as engineering.
+    // Format decimalValue or integerValue depending on format.radix.
     func standardText(format: ValueFormat) -> String {
         var text = ""
 
@@ -121,6 +130,7 @@ struct StackItem {
         return String(format: formatString, decimalValue)
     }
     
+    // Format decimalValue in exponential form.
     func scienceText(format: ValueFormat) -> String {
         var formatString = "0."
         for _ in (0..<format.decimalPlaces) {
@@ -138,6 +148,8 @@ struct StackItem {
         }
     }
     
+    // Format decimalValue such that the mantisa magnitude is in the range
+    // 0 - 999 and the exponent is a multiple of 3.
     func engineeringText(format: ValueFormat) -> String {
         var x = decimalValue
         var negative = false
@@ -149,6 +161,9 @@ struct StackItem {
         var text = ""
         var formatString: String = negative ? "-" : ""
         formatString += "%0.\(format.decimalPlaces)f"
+        // Compute the exponent and format string for both
+        // the > 1 and < 1 cases. The exponent is computed to
+        // always be a multiple of 3.
         if log10(x) < 0 {
             outputExponent = 3 + Int(-log10(x) / 3.0) * 3
             text = String(format: formatString, x * pow(10.0, Double(outputExponent)))
@@ -165,6 +180,8 @@ struct StackItem {
         return text
     }
     
+    // Return a tuple that is decimalValue seconds converted to hours,
+    // minutes, seconds.
     func toHMS(_ t: Double) -> (Int, Int, Double) {
         var seconds = t
         let hours = Int(seconds / 3600.0)

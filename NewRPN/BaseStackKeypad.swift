@@ -35,6 +35,34 @@ struct BaseStackKeypad: Keypad {
         }
         if let operationToken = operationMap[keySymbol] {
             switch operationToken.operation {
+            case .sto:
+                if let x = stack.getEntryValue() {
+                    let i = Int(x)
+                    if i >= 0 && i <= 9 {
+                        if stack.stackDepth() > 0 {
+                            stack.storedItems[i] = stack.pop()!
+                        } else {
+                            stack.postError("Stack empty")
+                        }
+                    } else {
+                        stack.postError("Index out of range")
+                    }
+                } else {
+                    stack.postError("Missing index")
+                }
+                stack.clearMantisa()
+            case .rcl:
+                if let x = stack.getEntryValue() {
+                    let i = Int(x)
+                    if i >= 0 && i <= 9 {
+                        stack.push(stack.storedItems[i])
+                    } else {
+                        stack.postError("Index out of range")
+                    }
+                } else {
+                    stack.postError("Missing index")
+                }
+                stack.clearMantisa()
             case .over:
                 stack.over()
                 stack.clearMantisa()

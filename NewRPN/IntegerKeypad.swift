@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+// Contains number keys, basic math keys and entry control keys. Number
+// keys cover octal, decimal and hexadecimal. Operations in octal and
+// hexadecimal mode are integer. Operations in decimal are floating point.
 struct IntegerKeypad: Keypad {
     @Binding var stack: Stack
     let fontSize: CGFloat = 25
@@ -53,7 +56,7 @@ struct IntegerKeypad: Keypad {
     ]
     
     func parse(_ keySymbol: String) -> Bool {
-        stack.message = ""
+        stack.postMessage("")
         if stack.parse(keySymbol) {
             return true // If stack handled it, we're done.
         }

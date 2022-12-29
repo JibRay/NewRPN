@@ -16,7 +16,7 @@ struct BaseEngineeringKeypad: Keypad {
                         "SINH": KeyStroke(operation: .sinh),
                         "COSH": KeyStroke(operation: .cosh),
                         "TANH": KeyStroke(operation: .tanh),
-                        " ": KeyStroke(operation: .none),
+                        ":": KeyStroke(operation: .none),
                         "H:M:S->": KeyStroke(operation: .fromHMS),
                         "\u{03C0}": KeyStroke(operation: .pi),
                         "x.root.y": KeyStroke(operation: .xRootY),
@@ -39,8 +39,8 @@ struct BaseEngineeringKeypad: Keypad {
     let key: [[Key]] = [
         [Key((3,6), symbol: "->H:M:S", columns: 2, color: Color.AppColor.science),
          Key((3,6), symbol: "H:M:S->", columns: 2, color: Color.AppColor.science),
-         Key((3,6), symbol: "\u{03C0}", color: Color.AppColor.science), // pi
-         Key((3,6), symbol: " ", color: Color.AppColor.science)],
+         Key((3,6), symbol: ":", color: Color.AppColor.science),
+         Key((3,6), symbol: "\u{03C0}", color: Color.AppColor.science)],
         
         [Key((3,6), symbol: "SINH", color: Color.AppColor.science),
          Key((3,6), symbol: "COSH", color: Color.AppColor.science),

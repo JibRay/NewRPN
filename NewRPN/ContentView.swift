@@ -19,12 +19,15 @@ enum FormatKeys {
     case decimal, integer
 }
 
+// The main calculator view. Displays keys, stack and toolbar.
 struct ContentView: View {
     @State var stack = Stack()
     @State var isShowingSettings = false
     @State var entryKeys: EntryKeys = .decimal
     @State var scienceKeys: ScienceKeys = .baseEngineering
     @State var formatKeys: FormatKeys = .decimal
+    
+    let version: Int
     
     var body: some View {
         NavigationView {
@@ -93,7 +96,7 @@ struct ContentView: View {
             .toolbar {
                 HStack() {
                     Text(stack.message)
-                        .foregroundColor(Color.pink)
+                        .foregroundColor(stack.messageForegroundColor)
                     Spacer()
                     Button(action: {
                         stack.degrees.toggle()
@@ -128,6 +131,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(version: 0)
     }
 }

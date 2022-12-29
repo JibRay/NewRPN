@@ -28,17 +28,20 @@ struct DecimalFormatKeypad: Keypad  {
     func setFormat(_ format: Format) {
         if format == .standard {
             stack.valueFormat.format = format
+            stack.postMessage(stack.valueFormat.format.rawValue)
         } else {
             if let x = stack.getEntryValue() {
                 let n = Int(x)
                 if n >= 0 && n <= 10 {
                     stack.valueFormat.format = format
                     stack.valueFormat.decimalPlaces = n
+                    stack.postMessage(stack.valueFormat.format.rawValue
+                                      + ": \(stack.valueFormat.decimalPlaces)")
                 } else {
-                    stack.message = "Error: argument out of range"
+                    stack.postError("Error: argument out of range")
                 }
             } else {
-                stack.message = "Error: missing argument"
+                stack.postError("Error: missing argument")
             }
         }
     }

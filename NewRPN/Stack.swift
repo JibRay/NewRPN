@@ -11,7 +11,9 @@ struct Stack {
     let stackSize = 4
     // Top of the stack is [0] and bottom is [stackSize - 1].
     var stackItems = [StackItem](repeating: StackItem(), count: 4)
+    var storedItems = [StackItem](repeating: StackItem(), count: 10)
     var message: String = ""
+    var messageForegroundColor: Color = Color.white
     var entryValuePrefix: String = ""
     var entryValueText: String {
         get {
@@ -31,6 +33,7 @@ struct Stack {
     
     var valueFormat: ValueFormat = ValueFormat()
     var degrees: Bool = true
+    var error: Bool = false // This seems like a messy way to do this.
     
     var mantisaText: String = ""
     var exponentText: String = ""
@@ -38,7 +41,7 @@ struct Stack {
     var negateMantisa = false
     var negateExponent = false
     let validOctalNumbers = "01234567"
-    let validDecimalNumbers = "0123456789."
+    let validDecimalNumbers = "0123456789.:"
     let validHexNumbers = "0123456789ABCDEF"
     let operationMap = ["+/-": KeyStroke(operation: .negate),
                         "DEL": KeyStroke(operation: .delete),
@@ -57,12 +60,19 @@ struct Stack {
         var value: Double? = nil
         var text = ""
         if mantisaText.count > 0 {
-            text = { negateMantisa ? "-" : "" }() + mantisaText
-            if exponentText.count > 0 {
-                text += "e" + { negateExponent ? "-" : "" }() + exponentText
-            }
-            if let v = Double(text) {
-                value = v
+            if mantisaText.contains(":") {
+                value = fromHMS(mantisaText)
+                if (value == nil) {
+                    postError("Error: invalid format")
+                }
+            } else {
+                text = { negateMantisa ? "-" : "" }() + mantisaText
+                if exponentText.count > 0 {
+                    text += "e" + { negateExponent ? "-" : "" }() + exponentText
+                }
+                if let v = Double(text) {
+                    value = v
+                }
             }
             clearMantisa()
         }
@@ -72,8 +82,10 @@ struct Stack {
     mutating func getEntryOrStackValue() -> Double? {
         var value: Double? = nil
         if let v = getEntryValue() {
-            value = v
-        } else {
+            if !error {
+                value = v
+            }
+        } else if !error {
             value = pop()?.decimalValue
         }
         return value
@@ -94,6 +106,37 @@ struct Stack {
         negateMantisa = false
         negateExponent = false
         parsingMantisa = true
+    }
+    
+    // Convert time spec in text to seconds. Format of text
+    // is expected to be hh:mm:s.s. Return nil if conversion
+    // fails.
+    func fromHMS(_ text: String) -> Double? {
+        var t: Double? = nil
+        let parts = text.components(separatedBy: ":")
+        if parts.count == 3 {
+            if let hours = Int(parts[0]) {
+                if let minutes = Int(parts[1]) {
+                    if let seconds = Double(parts[2]) {
+                        t = 3600.0 * Double(hours)
+                        t! += 60.0 * Double(minutes)
+                        t! += seconds
+                    }
+                }
+            }
+        }
+        return t
+    }
+
+    mutating func postMessage(_ text: String) {
+        message = text
+        messageForegroundColor = Color.AppColor.message
+    }
+    
+    mutating func postError(_ text: String) {
+        message = text
+        messageForegroundColor = Color.AppColor.error
+        error = true;
     }
     
     func stackDepth() -> Int {
@@ -155,6 +198,7 @@ struct Stack {
     // process it and return true. Otherwise return false.
     mutating func parse(_ keySymbol: String) -> Bool {
         message = ""
+        error = false
         switch valueFormat.radix {
         case .octal:
             if (validOctalNumbers.contains(keySymbol)) {

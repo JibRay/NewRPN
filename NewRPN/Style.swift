@@ -14,6 +14,8 @@ extension Color {
         static var enter: Color { return Color(red: 0.429, green: 0.429, blue: 0.429)}
         static var numbers: Color { return Color(red: 0.469, green: 0.320, blue: 0.234)}
         static var operators: Color { return Color(red: 0.60, green: 0.352, blue: 0.0)}
+        static var message: Color { Color.white }
+        static var error: Color { Color.pink }
     }
 }
 

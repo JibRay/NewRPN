@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Logic operations that can be applied to stack items.
 struct LogicKeypad: Keypad {
     @Binding var stack: Stack
     let fontSize: CGFloat = 18
