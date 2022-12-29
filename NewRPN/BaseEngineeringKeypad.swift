@@ -80,65 +80,85 @@ struct BaseEngineeringKeypad: Keypad {
                 }
             case .sin:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.push(StackItem(decimalValue: sin(x)))
+                    stack.pushDecimalValue(sin(x))
                 }
             case .cos:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.push(StackItem(decimalValue: cos(x)))
+                    stack.pushDecimalValue(cos(x))
                 }
             case .tan:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.push(StackItem(decimalValue: tan(x)))
+                    stack.pushDecimalValue(tan(x))
                 }
             case .sqrt:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.push(StackItem(decimalValue: sqrt(x)))
+                    stack.pushDecimalValue(sqrt(x))
                 }
             case .YtoX:
                 if let x: Double = stack.getEntryOrStackValue() {
                     if stack.stackDepth() > 0 {
                         let ys = stack.pop()
                         let y = ys!.decimalValue
-                        stack.push(StackItem(decimalValue: pow(y, x)))
+                        stack.pushDecimalValue(pow(y, x))
                     }
                 }
             case .invertX:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.push(StackItem(decimalValue: 1.0 / x))
+                    stack.pushDecimalValue(1.0 / x)
                 }
             case .asin:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.push(StackItem(decimalValue: asin(x)))
+                    stack.pushDecimalValue(asin(x))
                 }
             case .acos:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.push(StackItem(decimalValue: acos(x)))
+                    stack.pushDecimalValue(acos(x))
                 }
             case .atan:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.push(StackItem(decimalValue: atan(x)))
+                    stack.pushDecimalValue(atan(x))
                 }
             case .Xsquared:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.push(StackItem(decimalValue: x * x))
+                    stack.pushDecimalValue(x * x)
                 }
             case .tenToX:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.push(StackItem(decimalValue: pow(10.0, x)))
+                    stack.pushDecimalValue(pow(10.0, x))
                 }
             case .eToX:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.push(StackItem(decimalValue: exp(x)))
+                    stack.pushDecimalValue(exp(x))
                 }
             case .pi:
                 stack.push(StackItem(decimalValue: Double.pi))
             case .log:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.push(StackItem(decimalValue: log10(x)))
+                    stack.pushDecimalValue(log10(x))
                 }
             case .ln:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.push(StackItem(decimalValue: log(x)))
+                    stack.pushDecimalValue(log(x))
+                }
+            case .sinh:
+                if let x: Double = stack.getEntryOrStackValue() {
+                    stack.pushDecimalValue(sinh(x))
+                }
+            case .cosh:
+                if let x: Double = stack.getEntryOrStackValue() {
+                    stack.pushDecimalValue(cosh(x))
+                }
+            case .tanh:
+                if let x: Double = stack.getEntryOrStackValue() {
+                    stack.pushDecimalValue(tanh(x))
+                }
+            case .xRootY:
+                if let x: Double = stack.getEntryOrStackValue() {
+                    if stack.stackDepth() > 0 {
+                        let ys = stack.pop()
+                        let y = ys!.decimalValue
+                        stack.pushDecimalValue(pow(y, 1.0 / x))
+                    }
                 }
             default:
                 stack.clearMantisa()

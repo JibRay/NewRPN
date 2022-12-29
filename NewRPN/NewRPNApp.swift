@@ -8,18 +8,16 @@
 import SwiftUI
 
 // TODO:
-// 1. Add color option to message. Maybe a message type with an
-// associated color.
-// 2. Post message when format changes.
-// 3. Finish H:M:S.
-// 4. Implement STO and RCL.
-// 5. Keep working on error checking.
+// * Implement remaining engineering functions.
+// * Add a help button to settings.
+// * Save state in non-volatile memory.
+// * Keep working on error checking.
 @main
 struct NewRPNApp: App {
-    let version: Int = 2
+    static let version: Int = 2
     var body: some Scene {
         WindowGroup {
-            ContentView(version: self.version)
+            ContentView()
         }
     }
 }

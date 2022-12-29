@@ -27,8 +27,6 @@ struct ContentView: View {
     @State var scienceKeys: ScienceKeys = .baseEngineering
     @State var formatKeys: FormatKeys = .decimal
     
-    let version: Int
-    
     var body: some View {
         NavigationView {
             ZStack {
@@ -131,6 +129,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(version: 0)
+        ContentView()
     }
 }

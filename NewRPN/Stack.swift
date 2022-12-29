@@ -12,7 +12,7 @@ struct Stack {
     // Top of the stack is [0] and bottom is [stackSize - 1].
     var stackItems = [StackItem](repeating: StackItem(), count: 4)
     var storedItems = [StackItem](repeating: StackItem(), count: 10)
-    var message: String = ""
+    var message: String = "Version \(NewRPNApp.version)"
     var messageForegroundColor: Color = Color.white
     var entryValuePrefix: String = ""
     var entryValueText: String {
@@ -149,6 +149,15 @@ struct Stack {
             }
         }
         return depth
+    }
+    
+    // If value is valid, push it. Otherwise post and error.
+    mutating func pushDecimalValue(_ value: Double) {
+        if value.isFinite {
+            push(StackItem(decimalValue: value))
+        } else {
+            postError("invalid number")
+        }
     }
     
     mutating func push(_ item: StackItem) {

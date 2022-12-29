@@ -75,11 +75,7 @@ struct DecimalKeypad: Keypad {
                 if let x: Double = stack.getEntryOrStackValue() {
                     if let y = stack.pop()?.decimalValue {
                         let z = x + y
-                        if z.isFinite {
-                            stack.push(StackItem(decimalValue: z))
-                        } else {
-                            stack.postError("Invalid result")
-                        }
+                        stack.pushDecimalValue(z)
                     } else {
                         stack.postError("Error: stack empty")
                     }
@@ -88,11 +84,7 @@ struct DecimalKeypad: Keypad {
                 if let x: Double = stack.getEntryOrStackValue() {
                     if let y = stack.pop()?.decimalValue {
                         let z = y - x
-                        if z.isFinite {
-                            stack.push(StackItem(decimalValue: z))
-                        } else {
-                            stack.postError("Invalid result")
-                        }
+                        stack.pushDecimalValue(z)
                     } else {
                         stack.postError("Error: stack empty")
                     }
@@ -101,11 +93,7 @@ struct DecimalKeypad: Keypad {
                 if let x: Double = stack.getEntryOrStackValue() {
                     if let y = stack.pop()?.decimalValue {
                         let z = x * y
-                        if z.isFinite {
-                            stack.push(StackItem(decimalValue: z))
-                        } else {
-                            stack.postError("Invalid result")
-                        }
+                        stack.pushDecimalValue(z)
                     } else {
                         stack.postError("Error: stack empty")
                     }
@@ -114,22 +102,14 @@ struct DecimalKeypad: Keypad {
                 if let x: Double = stack.getEntryOrStackValue() {
                     if let y = stack.pop()?.decimalValue {
                         let z = y / x
-                        if z.isFinite {
-                            stack.push(StackItem(decimalValue: z))
-                        } else {
-                            stack.postError("Invalid result")
-                        }
+                        stack.pushDecimalValue(z)
                     } else {
                         stack.postError("Error: stack empty")
                     }
                 }
             case .enter:
                 if let v = stack.getEntryValue() {
-                    if v.isFinite {
-                        stack.push(StackItem(decimalValue: v))
-                    } else {
-                        stack.postError("Invalid number")
-                    }
+                    stack.pushDecimalValue(v)
                 } else {
                     stack.push(stack.stackItems[0])
                 }
