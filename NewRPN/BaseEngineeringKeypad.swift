@@ -63,6 +63,26 @@ struct BaseEngineeringKeypad: Keypad {
          Key((3,6), icon: .image, symbol: "10.to.x", color: Color.AppColor.science),
          Key((3,6), icon: .image, symbol: "e.to.x", color: Color.AppColor.science)]
     ]
+    
+    func getAngleValue() -> Double? {
+        if let x: Double = stack.getEntryOrStackValue() {
+            if stack.degrees {
+                return x * Double.pi / 180.0
+            } else {
+                return x
+            }
+        } else {
+            return nil
+        }
+    }
+    
+    func pushAngleValue(_ angle: Double) {
+        if stack.degrees {
+            stack.pushDecimalValue(angle * 180.0 / Double.pi)
+        } else {
+            stack.pushDecimalValue(angle)
+        }
+    }
 
     func parse(_ keySymbol: String) -> Bool {
         if stack.parse(keySymbol) {
@@ -79,15 +99,15 @@ struct BaseEngineeringKeypad: Keypad {
                     stack.valueFormat.displayAsHMS = false
                 }
             case .sin:
-                if let x: Double = stack.getEntryOrStackValue() {
+                if let x = getAngleValue() {
                     stack.pushDecimalValue(sin(x))
                 }
             case .cos:
-                if let x: Double = stack.getEntryOrStackValue() {
+                if let x = getAngleValue() {
                     stack.pushDecimalValue(cos(x))
                 }
             case .tan:
-                if let x: Double = stack.getEntryOrStackValue() {
+                if let x = getAngleValue() {
                     stack.pushDecimalValue(tan(x))
                 }
             case .sqrt:
@@ -108,15 +128,15 @@ struct BaseEngineeringKeypad: Keypad {
                 }
             case .asin:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.pushDecimalValue(asin(x))
+                    pushAngleValue(asin(x))
                 }
             case .acos:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.pushDecimalValue(acos(x))
+                    pushAngleValue(acos(x))
                 }
             case .atan:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    stack.pushDecimalValue(atan(x))
+                    pushAngleValue(atan(x))
                 }
             case .Xsquared:
                 if let x: Double = stack.getEntryOrStackValue() {

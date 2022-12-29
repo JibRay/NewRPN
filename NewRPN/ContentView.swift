@@ -77,20 +77,21 @@ struct ContentView: View {
                         KeypadView(stack: $stack, keypad: IntegerKeypad(stack: $stack))
                     }
                 }
+                .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global)
+                    .onEnded {_ in
+                            if entryKeys == .decimal {
+                            entryKeys = .integer
+                            scienceKeys = .logic
+                            formatKeys = .integer
+                        } else {
+                            entryKeys = .decimal
+                            scienceKeys = .baseEngineering
+                            formatKeys = .decimal
+                            stack.valueFormat.format = .standard
+                        }
+                    })
+                .animation(.spring(), value: 20)
             }
-            .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global)
-                .onEnded {_ in
-                        if entryKeys == .decimal {
-                        entryKeys = .integer
-                        scienceKeys = .logic
-                        formatKeys = .integer
-                    } else {
-                        entryKeys = .decimal
-                        scienceKeys = .baseEngineering
-                        formatKeys = .decimal
-                        stack.valueFormat.format = .standard
-                    }
-                })
             .toolbar {
                 HStack() {
                     Text(stack.message)
