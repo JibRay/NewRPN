@@ -35,6 +35,7 @@ struct SettingsView: View {
             Color.gray
             VStack(alignment: .leading) {
                 HStack() {
+                    // Close settings.
                     Button(action: {isShowingSettings.toggle()}, label: {
                         Image(systemName: "arrow.left")
                     })
@@ -42,6 +43,7 @@ struct SettingsView: View {
                     .foregroundColor(Color.black)
                     Spacer()
                 }
+                // Select decimal keypad.
                 Button(action: {
                     entryKeys = .decimal
                     scienceKeys = .baseEngineering
@@ -54,6 +56,7 @@ struct SettingsView: View {
                 .font(.title)
                 .foregroundColor(Color.black)
                 .padding(.leading, 30)
+                // Select integer keypad.
                 Button(action: {
                     entryKeys = .integer
                     scienceKeys = .logic
@@ -64,6 +67,7 @@ struct SettingsView: View {
                 .font(.title)
                 .foregroundColor(Color.black)
                 .padding(.leading, 30)
+                Text("Or swipe left/right to change keypads")
                 Spacer()
             }
         }
