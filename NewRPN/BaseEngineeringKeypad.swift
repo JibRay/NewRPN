@@ -91,11 +91,11 @@ struct BaseEngineeringKeypad: Keypad {
         if let operationToken = operationMap[keySymbol] {
             switch operationToken.operation {
             case .toHMS:
-                if stack.stackDepth() > 0 {
+                if stack.stackDepth > 0 {
                     stack.valueFormat.displayAsHMS = true
                 }
             case .fromHMS:
-                if stack.stackDepth() > 0 {
+                if stack.stackDepth > 0 {
                     stack.valueFormat.displayAsHMS = false
                 }
             case .sin:
@@ -116,7 +116,7 @@ struct BaseEngineeringKeypad: Keypad {
                 }
             case .YtoX:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    if stack.stackDepth() > 0 {
+                    if stack.stackDepth > 0 {
                         let ys = stack.pop()
                         let y = ys!.decimalValue
                         stack.pushDecimalValue(pow(y, x))
@@ -174,7 +174,7 @@ struct BaseEngineeringKeypad: Keypad {
                 }
             case .xRootY:
                 if let x: Double = stack.getEntryOrStackValue() {
-                    if stack.stackDepth() > 0 {
+                    if stack.stackDepth > 0 {
                         let ys = stack.pop()
                         let y = ys!.decimalValue
                         stack.pushDecimalValue(pow(y, 1.0 / x))

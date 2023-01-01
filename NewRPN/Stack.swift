@@ -78,7 +78,7 @@ struct Stack {
         }
         return value
     }
-    
+
     mutating func getEntryOrStackValue() -> Double? {
         var value: Double? = nil
         if let v = getEntryValue() {
@@ -139,7 +139,7 @@ struct Stack {
         error = true;
     }
     
-    func stackDepth() -> Int {
+    var stackDepth: Int {
         var depth = 0
         for index in 0..<stackSize {
             if stackItems[index].empty {
@@ -168,7 +168,7 @@ struct Stack {
     }
     
     mutating func pop() -> StackItem? {
-        if stackDepth() > 0 {
+        if stackDepth > 0 {
             let top = stackItems[0]
             for index in 1..<stackSize {
                 stackItems[index - 1] = stackItems[index]

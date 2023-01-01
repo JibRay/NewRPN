@@ -93,11 +93,11 @@ struct IntegerKeypad: Keypad {
             case .add:
                 // First see if there is a valid value in the mantisa.
                 if let x = Int64(stack.mantisaText, radix: stack.valueFormat.radix.rawValue) {
-                    if stack.stackDepth() >= 1 {
+                    if stack.stackDepth >= 1 {
                         let y = stack.pop()!.integerValue + x
                         stack.push(StackItem(integerValue: y))
                     }
-                } else if stack.stackDepth() >= 2 {
+                } else if stack.stackDepth >= 2 {
                     let x = stack.pop()!.integerValue
                     stack.stackItems[0].integerValue += x
                 }
@@ -105,11 +105,11 @@ struct IntegerKeypad: Keypad {
             case .subtract:
                 // First see if there is a valid value in the mantisa.
                 if let x = Int64(stack.mantisaText, radix: stack.valueFormat.radix.rawValue) {
-                    if stack.stackDepth() >= 1 {
+                    if stack.stackDepth >= 1 {
                         let y = stack.pop()!.integerValue - x
                         stack.push(StackItem(integerValue: y))
                     }
-                } else if stack.stackDepth() >= 2 {
+                } else if stack.stackDepth >= 2 {
                     let x = stack.pop()!.integerValue
                     stack.stackItems[0].integerValue -= x
                 }
@@ -117,11 +117,11 @@ struct IntegerKeypad: Keypad {
             case .multiply:
                 // First see if there is a valid value in the mantisa.
                 if let z = Int64(stack.mantisaText, radix: stack.valueFormat.radix.rawValue) {
-                    if stack.stackDepth() >= 1 {
+                    if stack.stackDepth >= 1 {
                         let y = stack.pop()!.integerValue * z
                         stack.push(StackItem(integerValue: y))
                     }
-                } else if stack.stackDepth() >= 2 {
+                } else if stack.stackDepth >= 2 {
                     let x = stack.pop()!.integerValue
                     stack.stackItems[0].integerValue *= x
                 }
@@ -129,11 +129,11 @@ struct IntegerKeypad: Keypad {
             case .divide:
                 // First see if there is a valid value in the mantisa.
                 if let z = Int64(stack.mantisaText, radix: stack.valueFormat.radix.rawValue) {
-                    if stack.stackDepth() >= 1 {
+                    if stack.stackDepth >= 1 {
                         let y = stack.pop()!.integerValue / z
                         stack.push(StackItem(integerValue: y))
                     }
-                } else if stack.stackDepth() >= 2 {
+                } else if stack.stackDepth >= 2 {
                     let x = stack.pop()!.integerValue
                     stack.stackItems[0].integerValue /= x
                 }

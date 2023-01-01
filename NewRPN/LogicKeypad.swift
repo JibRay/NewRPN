@@ -55,7 +55,7 @@ struct LogicKeypad: Keypad {
                 }
                 stack.clearMantisa()
             case .not:
-                if stack.stackDepth() > 0 {
+                if stack.stackDepth > 0 {
                     stack.stackItems[0].integerValue = ~stack.stackItems[0].integerValue
                 }
                 stack.clearMantisa()
@@ -70,7 +70,7 @@ struct LogicKeypad: Keypad {
                 stack.clearMantisa()
             case .leftShift:
                 if let n = Int(stack.mantisaText, radix: stack.valueFormat.radix.rawValue) {
-                    if stack.stackDepth() > 0 {
+                    if stack.stackDepth > 0 {
                         let x: Int64 = stack.stackItems[0].integerValue
                         stack.stackItems[0].integerValue = x << n
                     }
@@ -78,7 +78,7 @@ struct LogicKeypad: Keypad {
                 stack.clearMantisa()
             case .rightShift:
                 if let n = Int(stack.mantisaText, radix: stack.valueFormat.radix.rawValue) {
-                    if stack.stackDepth() > 0 {
+                    if stack.stackDepth > 0 {
                         let x: Int64 = stack.stackItems[0].integerValue
                         stack.stackItems[0].integerValue = x >> n
                     }
