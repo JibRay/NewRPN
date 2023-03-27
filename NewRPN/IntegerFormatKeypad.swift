@@ -35,14 +35,18 @@ struct IntegerFormatKeypad: Keypad  {
             switch operationToken.operation {
             case .selectOctal:
                 stack.valueFormat.radix = .octal
+                stack.valueFormat.format = .standard
                 stack.entryValuePrefix = "o:"
             case .selectDecimal:
                 stack.valueFormat.radix = .decimal
+                stack.valueFormat.format = .standard
                 stack.entryValuePrefix = ""
             case .selectHexadecimal:
                 stack.valueFormat.radix = .hexidecimal
+                stack.valueFormat.format = .standard
                 stack.entryValuePrefix = "h:"
             case .switchRadix:
+                stack.valueFormat.format = .standard
                 switch stack.valueFormat.radix {
                 case .octal:
                     stack.clearMantisa()

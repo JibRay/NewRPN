@@ -30,6 +30,7 @@ struct DecimalFormatKeypad: Keypad  {
             stack.valueFormat.format = format
             stack.postMessage(stack.valueFormat.format.rawValue)
         } else {
+            // Entry value is the new precision.
             if let x = stack.getEntryValue() {
                 let n = Int(x)
                 if n >= 0 && n <= 10 {
