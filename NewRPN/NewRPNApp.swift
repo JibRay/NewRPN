@@ -13,7 +13,7 @@ import SwiftUI
 // * Keep working on error checking.
 @main
 struct NewRPNApp: App {
-    static let version: Int = 4
+    static let version: Int = 5
     var body: some Scene {
         WindowGroup {
             ContentView()

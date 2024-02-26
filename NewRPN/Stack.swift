@@ -108,7 +108,7 @@ struct Stack {
         parsingMantisa = true
     }
     
-    // Convert time spec in text to seconds. Format of text
+    // Convert time spec in text to hours. Format of text
     // is expected to be hh:mm:s.s. Return nil if conversion
     // fails.
     func fromHMS(_ text: String) -> Double? {
@@ -117,10 +117,10 @@ struct Stack {
         if parts.count == 3 {
             if let hours = Int(parts[0]) {
                 if let minutes = Int(parts[1]) {
-                    if let seconds = Double(parts[2]) {
-                        t = 3600.0 * Double(hours)
-                        t! += 60.0 * Double(minutes)
-                        t! += seconds
+                    if let seconds = Int(parts[2]) {
+                        t = Double(hours)
+                        t! += Double(minutes) / 60.0
+                        t! += Double(seconds) / 3600.0
                     }
                 }
             }

@@ -70,7 +70,7 @@ struct StackItem {
         self.integerValue = integerValue
     }
 
-    // Format either decimalValue or integerValue depending on the value
+    // Format H:M:S, decimalValue or integerValue depending on the value
     // of the format argument.
     func text(format: ValueFormat) -> String {
         if empty {
@@ -180,14 +180,24 @@ struct StackItem {
         return text
     }
     
-    // Return a tuple that is decimalValue seconds converted to hours,
+    // Return a tuple that is decimalValue hours converted to hours,
     // minutes, seconds.
     func toHMS(_ t: Double) -> (Int, Int, Double) {
+        var t0 = t
+        let hours = Int(t0)
+        t0 -= Double(hours)
+        let minutes = Int(t0 * 60.0)
+        t0 -= Double(minutes) / 60.0
+        let seconds = t0 * 3600.0
+        
+        /*
         var seconds = t
         let hours = Int(seconds / 3600.0)
         seconds -= Double(3600 * hours)
         let minutes = Int(seconds / 60.0)
         seconds -= Double(60 * minutes)
+         */
+        
         return (hours, minutes, seconds)
     }
 }
