@@ -8,7 +8,6 @@
 import SwiftUI
 
 // TODO:
-// * Implement remaining engineering functions.
 // * Add a help button to settings.
 // * Save state in non-volatile memory.
 // * Keep working on error checking.
